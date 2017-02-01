@@ -1,3 +1,26 @@
-<h1>
-  {{title}}
-</h1>
+<div class="app-header">
+  <h1>
+    {{title}}
+  </h1>
+</div>
+<div>
+  Search...
+</div>
+<div>
+  <table class="table table-hover" >
+      <tbody>
+          <tr *ngFor="let movie of movieList">
+              <td ng-click="goToDetail(movie.id)">
+                  <div>
+                     <P class="search-result-title">{{movie.title}}</P>
+                      <p class="search-result-description">{{movie.releaseYear}} - {{movie.category}} - {{movie.runningTime}}</p>
+                  </div>
+              </td>
+              <td>
+                  <a href="#/{{movie.id}}" class="detail-button" >Detail</a>
+              </td>
+
+          </tr>
+      </tbody>
+  </table>
+</div>
