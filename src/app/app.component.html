@@ -3,9 +3,8 @@
     {{title}}
   </h1>
 </div>
-<div>
-  <h2>Search</h2>
-  <input type="text" [formControl]="term"/>
+<div class="search-area">
+  <input name="search" type="text" [formControl]="term" placeholder="Search.." class="search-box"/>
 </div>
 <div>
   <table class="table table-hover" >
