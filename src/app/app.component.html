@@ -4,12 +4,13 @@
   </h1>
 </div>
 <div>
-  Search...
+  <h2>Search</h2>
+  <input type="text" [formControl]="term"/>
 </div>
 <div>
   <table class="table table-hover" >
       <tbody>
-          <tr *ngFor="let movie of movieList">
+          <tr *ngFor="let movie of searchResult.movies">
               <td ng-click="goToDetail(movie.id)">
                   <div>
                      <P class="search-result-title">{{movie.title}}</P>
@@ -23,4 +24,5 @@
           </tr>
       </tbody>
   </table>
+  <p *ngIf="hasResults == false">No Results</p>
 </div>
