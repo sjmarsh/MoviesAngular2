@@ -9,10 +9,10 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 
 
 ## TODO ##
-- Search  
+- <del>Search</del>  
 - Detail Page  
 - Navigation  
-- Infinite Scroll or Paging
+- <del>Infinite Scroll or Paging</del>
 - Styles  
 - Animation  
 - Movie js and map files out of src folder
