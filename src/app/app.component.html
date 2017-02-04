@@ -9,7 +9,8 @@
 <div>
   <table class="table table-hover" >
       <tbody>
-          <tr *ngFor="let movie of searchResult.movies">
+          <tr *ngFor="let movie of searchResult.movies" infinite-scroll infiniteScrollDistance="2"
+            infiniteScrollThrottle="100" (scrolled)="onScroll()">
               <td ng-click="goToDetail(movie.id)">
                   <div>
                      <P class="search-result-title">{{movie.title}}</P>
