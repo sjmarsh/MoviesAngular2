@@ -29,6 +29,13 @@ export class MovieService {
                     .catch(this.handleError);
   }
 
+  getMovie(movieId: number): Promise<Movie> {
+    return this.http.get(`${this.baseUrl}/${movieId}`)
+               .toPromise()
+               .then(response => response.json() as Movie)
+               .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // todo use toastr + log
     return Promise.reject(error.message || error);

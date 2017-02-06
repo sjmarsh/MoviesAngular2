@@ -102,6 +102,7 @@ and (max-device-width : 1280px) {
     height: 30px;
     width: 30px;
     text-indent: -99999px;
+    filter: invert(100%);
 }
 
 .movie-detail-wrapper {
@@ -125,7 +126,7 @@ and (max-device-width : 1280px) {
 }
 
 .bg-img{
-   background: linear-gradient(150deg, white, white 50%, transparent), url('../img/film.jpg');
+   background: linear-gradient(150deg, #272b30, #272b30 50%, transparent), url('../assets/img/film.jpg');
    background-size: cover;
    background-position: 50% 50%;
    background-repeat: no-repeat;
