@@ -10,8 +10,9 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 
 ## TODO ##
 - <del>Search</del>  
-- Detail Page  
-- Navigation  
+- <del>Detail Page</del>  
+- <del>Navigation</del>
+- Maintain State   
 - <del>Infinite Scroll or Paging</del>
 - Styles  
 - Animation  
