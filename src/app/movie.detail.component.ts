@@ -1,4 +1,4 @@
-import { Component, OnInit  }    from '@angular/core';
+import { Component, OnInit, HostBinding  }    from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Router }               from '@angular/router';
 import { Location }                 from '@angular/common';
@@ -7,15 +7,22 @@ import 'rxjs/add/operator/switchMap';
 
 import { Movie } from './movie';
 import { MovieService } from './movie.service';
+import { slideInOutAnimation } from './animations';
+
 
 @Component({
   selector: 'movie-detail',
   templateUrl: './movie.detail.component.html',
   styleUrls: [
-    './app.component.css']
+    './app.component.css'],
+  animations: [ slideInOutAnimation ]
 })
 
 export class MovieDetailComponent implements OnInit {
+
+  @HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('style.display')   display = 'block';
+  @HostBinding('style.position')  position = 'absolute';
 
   constructor(
     private movieService: MovieService,
