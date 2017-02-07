@@ -15,9 +15,9 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 - Maintain State   
 - <del>Infinite Scroll or Paging</del>
 - Styles  
-- Animation  
-- Movie js and map files out of src folder
+- <del>Animation</del>  
 - Unit Tests
+- Environment Config
 - Deployment
 
 
