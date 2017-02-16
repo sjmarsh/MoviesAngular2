@@ -5,8 +5,8 @@ import { Location }                 from '@angular/common';
 
 import 'rxjs/add/operator/switchMap';
 
-import { Movie } from './movie';
-import { MovieService } from './movie.service';
+import { Movie } from './models/movie';
+import { MovieService } from './services/movie.service';
 import { slideInOutAnimation } from './animations';
 
 

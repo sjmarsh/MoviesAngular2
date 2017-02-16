@@ -5,8 +5,8 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-import { Movie } from './movie';
-import { MovieResponse } from './movie.response';
+import { Movie } from '../models/movie';
+import { MovieResponse } from '../models/movie.response';
 
 @Injectable()
 export class MovieService {

@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { MovieListComponent } from './movie.list.component';
 import { MovieDetailComponent } from './movie.detail.component';
 
-import { MovieService } from './movie.service';
+import { MovieService }         from './services/movie.service';
 import { AppRoutingModule }     from './app.routing.module';
 
 @NgModule({

@@ -12,9 +12,9 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchmap';
 
-import { Movie } from './movie';
-import { MovieResponse } from './movie.response';
-import { MovieService } from './movie.service';
+import { Movie } from './models/movie';
+import { MovieResponse } from './models/movie.response';
+import { MovieService } from './services/movie.service';
 
 @Component({
   selector: 'movie-list',
