@@ -3,6 +3,7 @@ import { FormControl }          from '@angular/forms';
 import { Router }               from '@angular/router';
 import { Observable }           from 'rxjs/Observable';
 import { Subject }              from 'rxjs/Subject';
+import { Store }                from '@ngrx/store';
 
 // Observable class extensions
 import 'rxjs/add/observable/of';
@@ -15,6 +16,10 @@ import 'rxjs/add/operator/switchmap';
 import { Movie } from './models/movie';
 import { MovieResponse } from './models/movie.response';
 import { MovieService } from './services/movie.service';
+import { CurrentSearch } from './models/current-search';
+
+import {AppState} from './reducers';
+import {MovieListActions} from './actions';
 
 @Component({
   selector: 'movie-list',
@@ -34,20 +39,25 @@ export class MovieListComponent implements OnInit {
   lastSkip: number;
   lastTake: number;
       
-  constructor(private movieService: MovieService,
-              private router: Router){
+  constructor(
+      private store: Store<AppState>,
+      private movieListActions: MovieListActions,
+      private movieService: MovieService,
+      private router: Router
+      ){
   };
 
   ngOnInit(): void {
-
     
-      this.term.valueChanges
-              .debounceTime(400)
-              .distinctUntilChanged()
-              .switchMap(term => this.movieService.searchForMovies(term, 0, this.PAGE_SIZE))
-              .subscribe(result => this.updateSearchResult(result));
+    this.term.valueChanges
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .switchMap(term => this.movieService.searchForMovies(term, 0, this.PAGE_SIZE))
+            .subscribe(result => this.updateSearchResult(result));
     
-    this.term.setValue(''); // trigger initial search
+    var initialSearchTerm = '';
+    this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
+    this.term.setValue(initialSearchTerm); // trigger initial search    
   }
 
   onScroll(): void {
@@ -91,8 +101,14 @@ export class MovieListComponent implements OnInit {
   }
 
   gotoDetail(movieId: number): void {
+    
+    // store current search 
+    this.store.dispatch(this.movieListActions.searchBoxTextChanged(this.term.value));
+    
     let link = ['/detail', movieId];
     this.router.navigate(link);
+
+    
   }
 
 }
