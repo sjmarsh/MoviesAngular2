@@ -53,11 +53,15 @@ export class MovieListComponent implements OnInit {
             .debounceTime(400)
             .distinctUntilChanged()
             .switchMap(term => this.movieService.searchForMovies(term, 0, this.PAGE_SIZE))
-            .subscribe(result => this.updateSearchResult(result));
+            .subscribe(result => this.store.dispatch(this.movieListActions.getMoviesSuccess(result)));
     
+    // initialise the search box
     var initialSearchTerm = '';
     this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
-    this.term.setValue(initialSearchTerm); // trigger initial search    
+    this.term.setValue(initialSearchTerm); 
+
+    // setup the search hasResults
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.searchResult = l.movieResponse);
   }
 
   onScroll(): void {
@@ -86,18 +90,10 @@ export class MovieListComponent implements OnInit {
       this.lastTake = take;
 
       this.movieService.searchForMovies(this.term.value, skip, take)
-      .subscribe(result => this.addMoreResults(result)); 
+        .subscribe(result => this.store.dispatch(this.movieListActions.getMoreMoviesSuccess(result)));
+      
+      this.currentPage = this.currentPage + 1;
     }
-  }
-
-  private addMoreResults(searchResult: MovieResponse): void {
-    
-    this.searchResult.count = searchResult.count;
-    for(let movie of searchResult.movies){
-      this.searchResult.movies.push(movie);
-    }
-
-    this.currentPage = this.currentPage + 1;
   }
 
   gotoDetail(movieId: number): void {
@@ -106,9 +102,7 @@ export class MovieListComponent implements OnInit {
     this.store.dispatch(this.movieListActions.searchBoxTextChanged(this.term.value));
     
     let link = ['/detail', movieId];
-    this.router.navigate(link);
-
-    
+    this.router.navigate(link);   
   }
 
 }

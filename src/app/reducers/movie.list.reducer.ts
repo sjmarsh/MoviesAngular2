@@ -10,8 +10,24 @@ export default function (state = initialState, action: Action): MovieListState {
     switch (action.type) {
 
     case MovieListActions.SEARCH_BOX_TEXT_CHANGED: {
-      var cs = new CurrentSearch();
+      var cs = Object.assign({}, state);
       cs.searchTerm = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.GET_MOVIES_SUCCESS: {
+      var cs = Object.assign({}, state);
+      cs.movieResponse = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.GET_MORE_MOVIES_SUCCESS: {
+      var cs = Object.assign({}, state);
+      cs.movieResponse.count = action.payload.count;
+      cs.movieResponse.movies
+      for(let movie of action.payload.movies){
+        cs.movieResponse.movies.push(movie);
+      }
       return cs;
     }
 
