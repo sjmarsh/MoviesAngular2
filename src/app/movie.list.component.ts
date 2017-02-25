@@ -38,7 +38,7 @@ export class MovieListComponent implements OnInit {
   currentPage = 1;
   lastSkip: number;
   lastTake: number;
-      
+
   constructor(
       private store: Store<AppState>,
       private movieListActions: MovieListActions,
@@ -48,56 +48,59 @@ export class MovieListComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    
+       
     this.term.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
             .switchMap(term => this.movieService.searchForMovies(term, 0, this.PAGE_SIZE))
-            .subscribe(result => this.store.dispatch(this.movieListActions.getMoviesSuccess(result)));
+            .subscribe(result => {
+              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
+              this.resetPaging();
+          });
     
-    // initialise the search box
-    var initialSearchTerm = '';
-    this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
-    this.term.setValue(initialSearchTerm); 
-
-    // setup the search hasResults
+    // setup search results
     this.store.select<CurrentSearch>('movieList').subscribe(l => this.searchResult = l.movieResponse);
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentPage = l.currentPage);
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.lastSkip = l.lastSkipSize);
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.lastTake = l.lastTakeSize);
+
+    // initialise the search box
+    let initialSearchTerm = '';
+    this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
+    let shouldSearch = this.searchResult.movies == null; // only call service on page/app refresh
+    this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });     
   }
 
   onScroll(): void {
     this.getMoreResults();
   }
  
-  private updateSearchResult(searchResult: MovieResponse){
-    this.searchResult = searchResult;
-    this.hasResults = this.searchResult.movies.length > 0; 
-    this.currentPage = 1;
-    this.lastSkip = 0;
-    this.lastTake = 0;
+  private resetPaging(): void {
+    this.store.dispatch(this.movieListActions.resetPaging());
   }
 
   private getMoreResults(): void {
-    
-    var totalPages = Math.ceil(this.searchResult.count / this.PAGE_SIZE);
-    var hasMorePages = this.currentPage < totalPages;
+    let totalPages = Math.ceil(this.searchResult.count / this.PAGE_SIZE);
+    let hasMorePages = this.currentPage < totalPages;
 
-    var skip = this.currentPage * this.PAGE_SIZE;
-    var take = this.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
-    var notAlreadyCalled = (skip !== this.lastSkip) && (take !== this.lastTake);
+    let skip = this.currentPage * this.PAGE_SIZE;
+    let take = this.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
+    let notAlreadyCalled = (skip !== this.lastSkip) && (take !== this.lastTake);
 
     if(hasMorePages && notAlreadyCalled){      
-      this.lastSkip = skip;
-      this.lastTake = take;
-
+      this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
+      this.store.dispatch(this.movieListActions.setLastTakeSize(take));
+     
       this.movieService.searchForMovies(this.term.value, skip, take)
-        .subscribe(result => this.store.dispatch(this.movieListActions.getMoreMoviesSuccess(result)));
-      
-      this.currentPage = this.currentPage + 1;
+        .subscribe(result => {
+          this.store.dispatch(this.movieListActions.getMoreMoviesSuccess(result));
+          this.store.dispatch(this.movieListActions.incrementCurrentPage());
+        }
+      );
     }
   }
 
   gotoDetail(movieId: number): void {
-    
     // store current search 
     this.store.dispatch(this.movieListActions.searchBoxTextChanged(this.term.value));
     

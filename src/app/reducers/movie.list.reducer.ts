@@ -10,24 +10,56 @@ export default function (state = initialState, action: Action): MovieListState {
     switch (action.type) {
 
     case MovieListActions.SEARCH_BOX_TEXT_CHANGED: {
-      var cs = Object.assign({}, state);
+      let cs = Object.assign({}, state);
       cs.searchTerm = action.payload;
       return cs;
     }
 
     case MovieListActions.GET_MOVIES_SUCCESS: {
-      var cs = Object.assign({}, state);
+      let cs = Object.assign({}, state);
       cs.movieResponse = action.payload;
       return cs;
     }
 
     case MovieListActions.GET_MORE_MOVIES_SUCCESS: {
-      var cs = Object.assign({}, state);
+      let cs = Object.assign({}, state);
       cs.movieResponse.count = action.payload.count;
       cs.movieResponse.movies
       for(let movie of action.payload.movies){
         cs.movieResponse.movies.push(movie);
       }
+      return cs;
+    }
+
+    case MovieListActions.SET_CURRENT_PAGE: {
+      let cs = Object.assign({}, state);
+      cs.currentPage = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.INCREMENT_CURRENT_PAGE: {
+      let cs = Object.assign({}, state);
+      cs.currentPage = cs.currentPage + 1;
+      return cs;
+    }
+
+    case MovieListActions.SET_LAST_SKIP_SIZE: {
+      let cs = Object.assign({}, state);
+      cs.lastSkipSize = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.SET_LAST_TAKE_SIZE: {
+      let cs = Object.assign({}, state);
+      cs.lastTakeSize = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.RESET_PAGING: {
+      let cs = Object.assign({}, state);
+      cs.currentPage = 1;
+      cs.lastSkipSize = 0;
+      cs.lastTakeSize = 0;
       return cs;
     }
 
