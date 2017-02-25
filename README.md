@@ -12,7 +12,8 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 - <del>Search</del>  
 - <del>Detail Page</del>  
 - <del>Navigation</del>
-- Maintain State   
+- Maintain State (still needs to store paging details, eg. current page, etc.) 
+- Filter by Category   
 - <del>Infinite Scroll or Paging</del>
 - Styles  
 - <del>Animation</del>  
