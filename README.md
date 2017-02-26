@@ -14,12 +14,13 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 - <del>Navigation</del>
 - <del>Maintain State</del> 
 - Filter by Category   
-- <del>Infinite Scroll or Paging</del>
+- <del>Infinite Scroll or Paging</del> (investigate performance issues)
 - Styles  
 - <del>Animation</del>  
 - Unit Tests
 - Environment Config
 - Deployment
+
 
 
 </br>
