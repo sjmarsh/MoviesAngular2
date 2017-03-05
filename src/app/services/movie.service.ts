@@ -23,8 +23,16 @@ export class MovieService {
                .catch(this.handleError);
   };
 
-  searchForMovies(term: string, skip: number, take: number) : Observable<MovieResponse>{    
-    return this.http.get(`${this.baseUrl}?searchFilter=${term}&skip=${skip}&take=${take}`)
+  searchForMovies(term: string, categories: Array<string>, skip: number, take: number) : Observable<MovieResponse>{    
+    var categoryList = '';
+    if(categories && categories.length > 0)
+    {
+      for(let category of categories){
+        categoryList += '&categories='+ category;
+      }
+    } 
+
+    return this.http.get(`${this.baseUrl}?searchFilter=${term}${categoryList}&skip=${skip}&take=${take}`)
                     .map((response) => response.json())
                     .catch(this.handleError);
   }

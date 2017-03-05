@@ -57,7 +57,7 @@ export class MovieListComponent implements OnInit {
     this.term.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
-            .switchMap(term => this.movieService.searchForMovies(term, 0, this.PAGE_SIZE))
+            .switchMap(term => this.movieService.searchForMovies(term, this.selectedCategories, 0, this.PAGE_SIZE))
             .subscribe(result => {
               this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
               this.resetPaging();
@@ -100,7 +100,7 @@ export class MovieListComponent implements OnInit {
       this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
       this.store.dispatch(this.movieListActions.setLastTakeSize(take));
      
-      this.movieService.searchForMovies(this.term.value, skip, take)
+      this.movieService.searchForMovies(this.term.value, this.selectedCategories, skip, take)
         .subscribe(result => {
           this.store.dispatch(this.movieListActions.getMoreMoviesSuccess(result));
           this.store.dispatch(this.movieListActions.incrementCurrentPage());
@@ -120,12 +120,20 @@ export class MovieListComponent implements OnInit {
   selectCategory($event, category: string): void {
     $event.stopPropagation();
     $event.preventDefault();
-    console.log(category);
     this.store.dispatch(this.movieListActions.addCategoryFilter(category));
-    console.log(this.selectedCategories);
+    this.movieService.searchForMovies(this.term.value, this.selectedCategories, 0, this.PAGE_SIZE)
+    .subscribe(result => {
+              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
+              this.resetPaging();
+          });
   }
 
   removeCategorySelection(category: string): void {
     this.store.dispatch(this.movieListActions.removeCategoryFilter(category));
+    this.movieService.searchForMovies(this.term.value, this.selectedCategories, 0, this.PAGE_SIZE)
+    .subscribe(result => {
+              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
+              this.resetPaging();
+          });
   }
 }

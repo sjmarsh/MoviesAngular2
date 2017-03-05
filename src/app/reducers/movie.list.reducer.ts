@@ -24,7 +24,6 @@ export default function (state = initialState, action: Action): MovieListState {
     case MovieListActions.GET_MORE_MOVIES_SUCCESS: {
       let cs = Object.assign({}, state);
       cs.movieResponse.count = action.payload.count;
-      cs.movieResponse.movies
       for(let movie of action.payload.movies){
         cs.movieResponse.movies.push(movie);
       }
