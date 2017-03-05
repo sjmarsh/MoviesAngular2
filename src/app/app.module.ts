@@ -13,6 +13,7 @@ import { MovieDetailComponent } from './movie.detail.component';
 
 import reducer                  from './reducers';
 import { MovieService }         from './services/movie.service';
+import { ReferenceDataService } from './services/reference-data.service';
 import { AppRoutingModule }     from './app.routing.module';
 import { MovieListActions }     from './actions';
 
@@ -31,7 +32,7 @@ import { MovieListActions }     from './actions';
     AppRoutingModule,
     StoreModule.provideStore(reducer)
   ],
-  providers: [MovieService, MovieListActions],
+  providers: [MovieService, ReferenceDataService,  MovieListActions],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,6 +16,7 @@ import 'rxjs/add/operator/switchmap';
 import { Movie } from './models/movie';
 import { MovieResponse } from './models/movie.response';
 import { MovieService } from './services/movie.service';
+import { ReferenceDataService } from './services/reference-data.service';
 import { CurrentSearch } from './models/current-search';
 
 import {AppState} from './reducers';
@@ -25,7 +26,7 @@ import {MovieListActions} from './actions';
   selector: 'movie-list',
   templateUrl: './movie.list.component.html',
   styleUrls: [
-    './app.component.css']
+    './app.component.css', '../assets/css/drop-down-styles.css', '../assets/css/arrow-styles.css']
 })
 
 export class MovieListComponent implements OnInit {
@@ -39,10 +40,14 @@ export class MovieListComponent implements OnInit {
   lastSkip: number;
   lastTake: number;
 
+  categories: string[];
+  selectedCategories: Array<string>;
+
   constructor(
       private store: Store<AppState>,
       private movieListActions: MovieListActions,
       private movieService: MovieService,
+      private referenceDataService: ReferenceDataService,
       private router: Router
       ){
   };
@@ -68,7 +73,11 @@ export class MovieListComponent implements OnInit {
     let initialSearchTerm = '';
     this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
     let shouldSearch = this.searchResult.movies == null; // only call service on page/app refresh
-    this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });     
+    this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });  
+
+    // initialise the category selector
+    this.referenceDataService.getCategories().then(result => this.categories = result);
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.selectedCategories = l.selectedCategories);
   }
 
   onScroll(): void {
@@ -108,4 +117,15 @@ export class MovieListComponent implements OnInit {
     this.router.navigate(link);   
   }
 
+  selectCategory($event, category: string): void {
+    $event.stopPropagation();
+    $event.preventDefault();
+    console.log(category);
+    this.store.dispatch(this.movieListActions.addCategoryFilter(category));
+    console.log(this.selectedCategories);
+  }
+
+  removeCategorySelection(category: string): void {
+    this.store.dispatch(this.movieListActions.removeCategoryFilter(category));
+  }
 }

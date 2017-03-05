@@ -3,8 +3,33 @@
     {{title}}
   </h1>
 </div>
-<div class="search-area">
-  <input name="search" type="text" [formControl]="term" placeholder="Search.." class="search-box"/>
+<div class="search-area row">
+  <div class="col-lg-3" >
+    <input name="search" type="text" [formControl]="term" placeholder="Search.." class="search-box"/>
+  </div>
+  <div class="category-selection-area col-lg-2">
+    <div class="drop-down">
+        <button class="dropbtn btn">
+            <div>
+              <span>Category(ies)</span>
+              <span class="arrow-down arrow-align-vertical-centre arrow-with-horizontal-margins"></span>
+            </div>
+        </button>
+        <div class="drop-down-content">
+            <div *ngFor="let category of categories">
+                <a href="#" (click)="selectCategory($event, category)">{{category}}</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="category-selections col-lg-7">
+      <div *ngFor="let selection of selectedCategories">
+          <span class="tag label label-info">
+              <span>{{selection}}</span>
+              <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" (click)="removeCategorySelection(selection)"></i></a> 
+          </span>
+      </div>
+    </div>
 </div>
 <div>
   <table class="table table-hover" >

@@ -67,4 +67,21 @@ export class MovieListActions {
       type: MovieListActions.RESET_PAGING
     };
   }
+
+  static ADD_CATEGORY_FILTER = '[Categories] Add Filter';
+  addCategoryFilter(category: string) : Action {
+    return {
+      type: MovieListActions.ADD_CATEGORY_FILTER,
+      payload: category
+    }
+  }
+
+  static REMOVE_CATEGORY_FILTER = '[Categories] Remove Filter';
+  removeCategoryFilter(category: string) : Action {
+    return {
+      type: MovieListActions.REMOVE_CATEGORY_FILTER,
+      payload: category
+    }
+  }
+
 }

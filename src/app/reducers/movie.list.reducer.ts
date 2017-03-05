@@ -63,6 +63,24 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.ADD_CATEGORY_FILTER: {
+      let cs = Object.assign({}, state);
+      var index = cs.selectedCategories.indexOf(action.payload);
+      if(index === -1){
+        cs.selectedCategories.push(action.payload);
+      }
+      return cs;
+    }
+
+    case MovieListActions.REMOVE_CATEGORY_FILTER: {
+      let cs = Object.assign({}, state);
+      var index = cs.selectedCategories.indexOf(action.payload);
+      if(index > -1){
+        cs.selectedCategories.splice(index, 1);
+      }
+      return cs;
+    }
+
     default:
       return state;
   }
