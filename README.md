@@ -13,9 +13,10 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 - <del>Detail Page</del>  
 - <del>Navigation</del>
 - <del>Maintain State</del> 
-- Filter by Category   
+- <del>Filter by Category</del>   
 - <del>Infinite Scroll or Paging</del> (investigate performance issues)
-- Styles  
+- Clear search term with "X" button  
+- Styles (inc. drop-down list conflicting with search results) 
 - <del>Animation</del>  
 - Unit Tests
 - Environment Config
