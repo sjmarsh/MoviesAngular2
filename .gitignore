@@ -42,3 +42,4 @@ Thumbs.db
 #log files
 npm-debug.log.*
 debug.log
+src/environments/environment.prod.ts
