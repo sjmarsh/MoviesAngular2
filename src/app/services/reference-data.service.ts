@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class ReferenceDataService {
-  private baseUrl = 'http://localhost:5000' + '/api/referenceData';
+  private baseUrl = environment.movieApiUrl + '/api/referenceData';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http){}

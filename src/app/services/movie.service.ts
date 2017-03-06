@@ -8,10 +8,12 @@ import 'rxjs/add/operator/toPromise';
 import { Movie } from '../models/movie';
 import { MovieResponse } from '../models/movie.response';
 
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class MovieService {
 
-  private baseUrl = 'http://localhost:5000' + '/api/movies';
+  private baseUrl = environment.movieApiUrl + '/api/movies';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http){}
