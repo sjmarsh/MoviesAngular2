@@ -29,6 +29,10 @@
     padding: 12px 20px 12px 40px;
 }
 
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
 .search-button {
     margin-top: 5px;
     margin-left: 0.5em;
