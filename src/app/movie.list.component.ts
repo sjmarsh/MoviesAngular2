@@ -100,13 +100,7 @@ export class MovieListComponent implements OnInit {
     if(hasMorePages && notAlreadyCalled){      
       this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
       this.store.dispatch(this.movieListActions.setLastTakeSize(take));
-     
-      this.movieService.searchForMovies(this.term.value, this.selectedCategories, skip, take)
-        .subscribe(result => {
-          this.store.dispatch(this.movieListActions.getMoreMoviesSuccess(result));
-          this.store.dispatch(this.movieListActions.incrementCurrentPage());
-        }
-      );
+      this.store.dispatch(this.movieListActions.getMoreMovies(new SearchCriteria(this.term.value, this.selectedCategories, skip, take)));
     }
   }
 

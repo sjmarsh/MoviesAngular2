@@ -16,12 +16,20 @@ export class MovieListEffects{
     private movieService: MovieService,
     private referenceDataService: ReferenceDataService,
     private movieListActions: MovieListActions,
-    private action$: Actions
+    private actions$: Actions
   ){}
 
-  @Effect() getMovies$ = this.action$
+  @Effect() getMovies$ = this.actions$
     .ofType(MovieListActions.GET_MOVIES)
     .select<SearchCriteria>(action => action.payload)
     .switchMap(criteria => this.movieService.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize))
-    .map(result => this.movieListActions.getMoviesSuccess(result), error => console.log("Error: " + error)); // todo error logging
+    .map(result => this.movieListActions.getMoviesSuccess(result)); // todo error logging
+
+  @Effect() getMoreMovies$ = this.actions$
+    .ofType(MovieListActions.GET_MORE_MOVIES)
+    .select<SearchCriteria>(action =>  action.payload)
+    .switchMap(criteria => this.movieService.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize))
+    .map(result => this.movieListActions.getMoreMoviesSuccess(result)); // todo error logging
+
+  
 }

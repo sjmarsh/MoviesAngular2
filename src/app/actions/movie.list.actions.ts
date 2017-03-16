@@ -31,6 +31,14 @@ export class MovieListActions {
     };
   }
 
+  static GET_MORE_MOVIES = '[GetMoreMovies]';
+  getMoreMovies(searchCriteria: SearchCriteria) : Action {
+    return {
+      type: MovieListActions.GET_MORE_MOVIES,
+      payload: searchCriteria
+    };
+  }
+
   static GET_MORE_MOVIES_SUCCESS = '[GetMoreMovies] Success';
   getMoreMoviesSuccess(result: MovieResponse) : Action {
     return {
@@ -44,13 +52,6 @@ export class MovieListActions {
     return {
       type: MovieListActions.SET_CURRENT_PAGE,
       payload: currentPage
-    };
-  }
-
-  static INCREMENT_CURRENT_PAGE = '[Paging] Increment Current Page';
-  incrementCurrentPage() : Action {
-    return {
-      type: MovieListActions.INCREMENT_CURRENT_PAGE
     };
   }
 

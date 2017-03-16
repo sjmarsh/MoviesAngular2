@@ -30,24 +30,28 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.GET_MORE_MOVIES: {
+      let cs = Object.assign({}, state); 
+      cs.searchTerm = action.payload.searchTerm;
+      cs.selectedCategories = action.payload.selectedCategories;
+      cs.lastTakeSize = action.payload.currentTakeSize;
+      cs.lastSkipSize = action.payload.currentSkipSize;
+      return cs;
+    }
+
     case MovieListActions.GET_MORE_MOVIES_SUCCESS: {
       let cs = Object.assign({}, state);
       cs.movieResponse.count = action.payload.count;
       for(let movie of action.payload.movies){
         cs.movieResponse.movies.push(movie);
       }
+      cs.currentPage = cs.currentPage + 1;
       return cs;
     }
 
     case MovieListActions.SET_CURRENT_PAGE: {
       let cs = Object.assign({}, state);
       cs.currentPage = action.payload;
-      return cs;
-    }
-
-    case MovieListActions.INCREMENT_CURRENT_PAGE: {
-      let cs = Object.assign({}, state);
-      cs.currentPage = cs.currentPage + 1;
       return cs;
     }
 
