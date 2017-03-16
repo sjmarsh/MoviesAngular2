@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Movie } from '../models/movie';
 import { MovieResponse } from '../models/movie.response';
+import { CurrentSearch } from '../models/current-search';
 
 import { environment } from '../../environments/environment';
 
@@ -18,12 +19,15 @@ export class MovieService {
 
   constructor(private http: Http){}
 
+/*
+ // not used
   getMovies(): Promise<MovieResponse> {
     return this.http.get(this.baseUrl)
                .toPromise()
                .then(response => response.json() as MovieResponse)
                .catch(this.handleError);
   };
+*/
 
   searchForMovies(term: string, categories: Array<string>, skip: number, take: number) : Observable<MovieResponse>{    
     var categoryList = '';

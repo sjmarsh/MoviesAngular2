@@ -18,6 +18,7 @@ import { MovieResponse } from './models/movie.response';
 import { MovieService } from './services/movie.service';
 import { ReferenceDataService } from './services/reference-data.service';
 import { CurrentSearch } from './models/current-search';
+import { SearchCriteria } from './models/search-criteria';
 
 import {AppState} from './reducers';
 import {MovieListActions} from './actions';
@@ -57,11 +58,11 @@ export class MovieListComponent implements OnInit {
     this.term.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
-            .switchMap(term => this.movieService.searchForMovies(term, this.selectedCategories, 0, this.PAGE_SIZE))
-            .subscribe(result => {
-              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
+            .subscribe(term => {
+              this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(term, this.selectedCategories, 0, this.PAGE_SIZE)))
               this.resetPaging();
-          });
+            });
+            
     
     // setup search results
     this.store.select<CurrentSearch>('movieList').subscribe(l => this.searchResult = l.movieResponse);

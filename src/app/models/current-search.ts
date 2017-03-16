@@ -9,7 +9,8 @@ export class CurrentSearch {
   public lastTakeSize: number;
   public selectedCategories: Array<string>;
 
-  public constructor(){
+  public constructor(
+  ){
     this.searchTerm = '';
     this.movieResponse = new MovieResponse();
     this.currentPage = 1;

@@ -15,6 +15,15 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.GET_MOVIES: {
+      let cs = Object.assign({}, state); 
+      cs.searchTerm = action.payload.searchTerm;
+      cs.selectedCategories = action.payload.selectedCategories;
+      cs.lastTakeSize = action.payload.currentTakeSize;
+      cs.lastSkipSize = action.payload.currentSkipSize;
+      return cs;
+    }
+
     case MovieListActions.GET_MOVIES_SUCCESS: {
       let cs = Object.assign({}, state);
       cs.movieResponse = action.payload;

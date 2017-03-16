@@ -2,6 +2,7 @@ import { Injectable }   from '@angular/core';
 import { Action }       from '@ngrx/store';
 
 import { MovieResponse } from '../models/movie.response';
+import { SearchCriteria } from '../models/search-criteria';
 
 @Injectable()
 export class MovieListActions {
@@ -11,6 +12,14 @@ export class MovieListActions {
     return {
       type: MovieListActions.SEARCH_BOX_TEXT_CHANGED,
       payload: searchTerm
+    };
+  }
+
+  static GET_MOVIES = '[GetMovies]';
+  getMovies(searchCriteria: SearchCriteria) : Action {
+    return{
+      type: MovieListActions.GET_MOVIES,
+      payload: searchCriteria
     };
   }
 

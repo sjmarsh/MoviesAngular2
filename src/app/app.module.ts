@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule }  from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { Store, StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { MovieService }         from './services/movie.service';
 import { ReferenceDataService } from './services/reference-data.service';
 import { AppRoutingModule }     from './app.routing.module';
 import { MovieListActions }     from './actions';
+import { MovieListEffects }     from './effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { MovieListActions }     from './actions';
     ReactiveFormsModule,
     InfiniteScrollModule,
     AppRoutingModule,
-    StoreModule.provideStore(reducer)
+    StoreModule.provideStore(reducer),
+    EffectsModule.run(MovieListEffects)
   ],
   providers: [MovieService, ReferenceDataService,  MovieListActions],
   bootstrap: [AppComponent]
