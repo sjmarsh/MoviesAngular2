@@ -42,9 +42,6 @@ export class MovieListComponent implements OnInit {
   term = new FormControl();
   currentSearch = new CurrentSearch();
   hasResults: boolean;
-  
-  categories: string[];
-  selectedCategories: Array<string>;
 
   constructor(
       private store: Store<AppState>,
@@ -56,26 +53,27 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // initialise the category selector
+    if(this.currentSearch.allCategories && this.currentSearch.allCategories.length === 0){
+      this.store.dispatch(this.movieListActions.getCategories());
+    }
+
+    // initialise the search box
     this.term.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
             .subscribe(term => {
-              this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(term, this.selectedCategories, 0, this.PAGE_SIZE)))
+              this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(term, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)))
               this.resetPaging();
             });
            
     // setup search results
     this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentSearch = l);
   
-    // initialise the search box
+    // trigger initial search
     let initialSearchTerm = '';
-    this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
     let shouldSearch = this.currentSearch.movieResponse.movies == null; // only call service on page/app refresh
     this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });  
-
-    // initialise the category selector
-    this.referenceDataService.getCategories().then(result => this.categories = result);
-    this.store.select<CurrentSearch>('movieList').subscribe(l => this.selectedCategories = l.selectedCategories);
   }
 
   onScroll(): void {
@@ -97,7 +95,7 @@ export class MovieListComponent implements OnInit {
     if(hasMorePages && notAlreadyCalled){      
       this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
       this.store.dispatch(this.movieListActions.setLastTakeSize(take));
-      this.store.dispatch(this.movieListActions.getMoreMovies(new SearchCriteria(this.term.value, this.selectedCategories, skip, take)));
+      this.store.dispatch(this.movieListActions.getMoreMovies(new SearchCriteria(this.term.value, this.currentSearch.selectedCategories, skip, take)));
     }
   }
 
@@ -110,7 +108,7 @@ export class MovieListComponent implements OnInit {
     $event.stopPropagation();
     $event.preventDefault();
     this.store.dispatch(this.movieListActions.addCategoryFilter(category));
-    this.movieService.searchForMovies(this.term.value, this.selectedCategories, 0, this.PAGE_SIZE)
+    this.movieService.searchForMovies(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)
     .subscribe(result => {
               this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
               this.resetPaging();
@@ -119,7 +117,7 @@ export class MovieListComponent implements OnInit {
 
   removeCategorySelection(category: string): void {
     this.store.dispatch(this.movieListActions.removeCategoryFilter(category));
-    this.movieService.searchForMovies(this.term.value, this.selectedCategories, 0, this.PAGE_SIZE)
+    this.movieService.searchForMovies(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)
     .subscribe(result => {
               this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
               this.resetPaging();

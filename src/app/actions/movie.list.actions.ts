@@ -70,6 +70,21 @@ export class MovieListActions {
     };
   }
 
+  static GET_CATEGORIES = '[Categories] - Get Request';
+  getCategories() : Action {
+    return {
+      type: MovieListActions.GET_CATEGORIES
+    };
+  }
+
+  static GET_CATEGORIES_SUCCESS = '[Categories] - Get Success';
+  getCategoriesSuccess(categories: Array<string>) : Action {
+    return{
+      type: MovieListActions.GET_CATEGORIES_SUCCESS,
+      payload: categories
+    }
+  }
+
   static ADD_CATEGORY_FILTER = '[Categories] Add Filter';
   addCategoryFilter(category: string) : Action {
     return {

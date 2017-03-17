@@ -16,14 +16,14 @@
             </div>
         </button>
         <div class="drop-down-content">
-            <div *ngFor="let category of categories">
+            <div *ngFor="let category of currentSearch.allCategories">
                 <a href="#" (click)="selectCategory($event, category)">{{category}}</a>
             </div>
         </div>
     </div>
   </div>
   <div class="category-selections col-lg-7">
-      <div *ngFor="let selection of selectedCategories">
+      <div *ngFor="let selection of currentSearch.selectedCategories">
           <span class="tag label label-info">
               <span>{{selection}}</span>
               <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" (click)="removeCategorySelection(selection)"></i></a> 

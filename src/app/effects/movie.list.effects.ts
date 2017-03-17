@@ -31,5 +31,8 @@ export class MovieListEffects{
     .switchMap(criteria => this.movieService.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize))
     .map(result => this.movieListActions.getMoreMoviesSuccess(result)); // todo error logging
 
-  
+  @Effect() getCategories$ = this.actions$
+    .ofType(MovieListActions.GET_CATEGORIES)
+    .switchMap(() => this.referenceDataService.getCategories())
+    .map(result => this.movieListActions.getCategoriesSuccess(result));
 }

@@ -7,6 +7,7 @@ export class CurrentSearch {
   public currentPage: number;
   public lastSkipSize: number;
   public lastTakeSize: number;
+  public allCategories: Array<string>;
   public selectedCategories: Array<string>;
 
   public constructor(
@@ -16,6 +17,7 @@ export class CurrentSearch {
     this.currentPage = 1;
     this.lastSkipSize = 0;
     this.lastTakeSize = 0;
+    this.allCategories = new Array<string>();
     this.selectedCategories = new Array<string>();
   }
 }

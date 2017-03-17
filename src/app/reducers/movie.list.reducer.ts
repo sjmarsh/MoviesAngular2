@@ -69,6 +69,17 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.GET_CATEGORIES: {  
+      // nothing happening yet - could be used for loading animation?
+      return state;
+    }
+
+    case MovieListActions.GET_CATEGORIES_SUCCESS: {
+      let cs = Object.assign({}, state);
+      cs.allCategories = action.payload;
+      return cs;
+    }
+
     case MovieListActions.ADD_CATEGORY_FILTER: {
       let cs = Object.assign({}, state);
       var index = cs.selectedCategories.indexOf(action.payload);
