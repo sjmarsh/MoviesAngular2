@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Movie } from './models/movie';
 import { MovieService } from './services/movie.service';
-import { slideInOutAnimation } from './animations';
+import { slideLeftAnimation } from './animations';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { slideInOutAnimation } from './animations';
   templateUrl: './movie.detail.component.html',
   styleUrls: [
     './app.component.css'],
-  animations: [ slideInOutAnimation ]
+  animations: [ slideLeftAnimation ]
 })
 
 export class MovieDetailComponent implements OnInit {

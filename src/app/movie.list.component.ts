@@ -1,9 +1,9 @@
-import { Component, OnInit }    from '@angular/core';
-import { FormControl }          from '@angular/forms';
-import { Router }               from '@angular/router';
-import { Observable }           from 'rxjs/Observable';
-import { Subject }              from 'rxjs/Subject';
-import { Store }                from '@ngrx/store';
+import { Component, OnInit, HostBinding } from '@angular/core';
+import { FormControl }                    from '@angular/forms';
+import { Router }                         from '@angular/router';
+import { Observable }                     from 'rxjs/Observable';
+import { Subject }                        from 'rxjs/Subject';
+import { Store }                          from '@ngrx/store';
 
 // Observable class extensions
 import 'rxjs/add/observable/of';
@@ -20,18 +20,23 @@ import { ReferenceDataService } from './services/reference-data.service';
 import { CurrentSearch } from './models/current-search';
 import { SearchCriteria } from './models/search-criteria';
 
-import {AppState} from './reducers';
-import {MovieListActions} from './actions';
+import { AppState } from './reducers';
+import { MovieListActions } from './actions';
+import { slideRightAnimation } from './animations';
 
 @Component({
   selector: 'movie-list',
   templateUrl: './movie.list.component.html',
+  animations: [ slideRightAnimation ],
   styleUrls: [
     './app.component.css', '../assets/css/drop-down-styles.css', '../assets/css/arrow-styles.css']
 })
 
 export class MovieListComponent implements OnInit {
  
+  @HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('style.display')   display = 'block';
+
   readonly PAGE_SIZE = 10;
   
   term = new FormControl();
@@ -50,7 +55,7 @@ export class MovieListComponent implements OnInit {
       ){};
 
   ngOnInit(): void {
-       
+
     this.term.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
