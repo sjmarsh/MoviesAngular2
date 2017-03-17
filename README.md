@@ -16,9 +16,11 @@ Follows on from MoviesAngular1 app ([https://github.com/sjmarsh/MoviesAngular1](
 - <del>Filter by Category</del>   
 - <del>Infinite Scroll or Paging</del> (investigate performance issues)
 - <del>Clear search term with "X" button</del>  
-- Fix Getting Categories from server on every page refresh
+- <del>Fix Getting Categories from server on every page refresh<del>
+- Category Selection/Removal to use Effects
 - Fix Styles (inc. drop-down list conflicting with search results) 
 - <del>Animation</del>  
+- Error Handling (inc messaging and logging)
 - Unit Tests
 - Refactor List component - eg. Search Box & Search Results into their own components
 - <del>Environment Config</del>
