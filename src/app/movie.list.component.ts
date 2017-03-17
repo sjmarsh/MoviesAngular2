@@ -72,6 +72,7 @@ export class MovieListComponent implements OnInit {
   
     // trigger initial search
     let initialSearchTerm = '';
+    this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);
     let shouldSearch = this.currentSearch.movieResponse.movies == null; // only call service on page/app refresh
     this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });  
   }
