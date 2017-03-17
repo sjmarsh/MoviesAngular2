@@ -6,16 +6,8 @@ import { SearchCriteria } from '../models/search-criteria';
 
 @Injectable()
 export class MovieListActions {
-  
-  static SEARCH_BOX_TEXT_CHANGED = '[SearchBox] Text Changed';
-  searchBoxTextChanged(searchTerm: string): Action {
-    return {
-      type: MovieListActions.SEARCH_BOX_TEXT_CHANGED,
-      payload: searchTerm
-    };
-  }
-
-  static GET_MOVIES = '[GetMovies]';
+    
+  static GET_MOVIES = '[GetMovies] Request';
   getMovies(searchCriteria: SearchCriteria) : Action {
     return{
       type: MovieListActions.GET_MOVIES,
@@ -31,7 +23,7 @@ export class MovieListActions {
     };
   }
 
-  static GET_MORE_MOVIES = '[GetMoreMovies]';
+  static GET_MORE_MOVIES = '[GetMoreMovies] Request';
   getMoreMovies(searchCriteria: SearchCriteria) : Action {
     return {
       type: MovieListActions.GET_MORE_MOVIES,

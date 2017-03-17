@@ -34,7 +34,7 @@
 <div>
   <table class="table table-hover" >
       <tbody>
-          <tr *ngFor="let movie of searchResult.movies" infinite-scroll infiniteScrollDistance="2"
+          <tr *ngFor="let movie of currentSearch.movieResponse.movies" infinite-scroll infiniteScrollDistance="2"
             infiniteScrollThrottle="100" (scrolled)="onScroll()">
               <td (click)="gotoDetail(movie.id); false">
                   <div>

@@ -35,12 +35,9 @@ export class MovieListComponent implements OnInit {
   readonly PAGE_SIZE = 10;
   
   term = new FormControl();
-  searchResult = new MovieResponse();
+  currentSearch = new CurrentSearch();
   hasResults: boolean;
-  currentPage = 1;
-  lastSkip: number;
-  lastTake: number;
-
+  
   categories: string[];
   selectedCategories: Array<string>;
 
@@ -50,8 +47,7 @@ export class MovieListComponent implements OnInit {
       private movieService: MovieService,
       private referenceDataService: ReferenceDataService,
       private router: Router
-      ){
-  };
+      ){};
 
   ngOnInit(): void {
        
@@ -62,18 +58,14 @@ export class MovieListComponent implements OnInit {
               this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(term, this.selectedCategories, 0, this.PAGE_SIZE)))
               this.resetPaging();
             });
-            
-    
+           
     // setup search results
-    this.store.select<CurrentSearch>('movieList').subscribe(l => this.searchResult = l.movieResponse);
-    this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentPage = l.currentPage);
-    this.store.select<CurrentSearch>('movieList').subscribe(l => this.lastSkip = l.lastSkipSize);
-    this.store.select<CurrentSearch>('movieList').subscribe(l => this.lastTake = l.lastTakeSize);
-
+    this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentSearch = l);
+  
     // initialise the search box
     let initialSearchTerm = '';
     this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);    
-    let shouldSearch = this.searchResult.movies == null; // only call service on page/app refresh
+    let shouldSearch = this.currentSearch.movieResponse.movies == null; // only call service on page/app refresh
     this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });  
 
     // initialise the category selector
@@ -90,12 +82,12 @@ export class MovieListComponent implements OnInit {
   }
 
   private getMoreResults(): void {
-    let totalPages = Math.ceil(this.searchResult.count / this.PAGE_SIZE);
-    let hasMorePages = this.currentPage < totalPages;
+    let totalPages = Math.ceil(this.currentSearch.movieResponse.count / this.PAGE_SIZE);
+    let hasMorePages = this.currentSearch.currentPage < totalPages;
 
-    let skip = this.currentPage * this.PAGE_SIZE;
-    let take = this.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
-    let notAlreadyCalled = (skip !== this.lastSkip) && (take !== this.lastTake);
+    let skip = this.currentSearch.currentPage * this.PAGE_SIZE;
+    let take = this.currentSearch.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
+    let notAlreadyCalled = (skip !== this.currentSearch.lastSkipSize) && (take !== this.currentSearch.lastTakeSize);
 
     if(hasMorePages && notAlreadyCalled){      
       this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
@@ -105,9 +97,6 @@ export class MovieListComponent implements OnInit {
   }
 
   gotoDetail(movieId: number): void {
-    // store current search 
-    this.store.dispatch(this.movieListActions.searchBoxTextChanged(this.term.value));
-    
     let link = ['/detail', movieId];
     this.router.navigate(link);   
   }
