@@ -8,13 +8,7 @@ const initialState: MovieListState = new CurrentSearch();
 
 export default function (state = initialState, action: Action): MovieListState {
     switch (action.type) {
-
-    case MovieListActions.SEARCH_BOX_TEXT_CHANGED: {
-      let cs = Object.assign({}, state);
-      cs.searchTerm = action.payload;
-      return cs;
-    }
-
+    
     case MovieListActions.GET_MOVIES: {
       let cs = Object.assign({}, state); 
       cs.searchTerm = action.payload.searchTerm;
