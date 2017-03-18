@@ -37,7 +37,7 @@
           <tr *ngFor="let movie of currentSearch.movieResponse.movies" infinite-scroll infiniteScrollDistance="2"
             infiniteScrollThrottle="100" (scrolled)="onScroll()">
               <td (click)="gotoDetail(movie.id); false">
-                  <div>
+                  <div class="movie-id-{{movie.id}}">
                      <P class="search-result-title">{{movie.title}}</P>
                       <p class="search-result-description">{{movie.releaseYear}} - {{movie.category}} - {{movie.runningTime}}</p>
                   </div>

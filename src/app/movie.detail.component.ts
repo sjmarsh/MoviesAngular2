@@ -37,6 +37,8 @@ export class MovieDetailComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.movieService.getMovie(+params['id']))
       .subscribe(movie => this.movieDetail = movie);
+    
+    window.scrollTo(0,0);
   }
 
   backToList(){

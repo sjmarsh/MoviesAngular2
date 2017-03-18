@@ -101,4 +101,20 @@ export class MovieListActions {
     }
   }
 
+  static SET_SELECTED_MOVIE_ID = '[SelectedMovie] Set Id';
+  setSelectedMovieId(movieId: number) : Action {
+    return {
+      type: MovieListActions.SET_SELECTED_MOVIE_ID,
+      payload: movieId
+    };
+  }
+
+  static SET_LAST_SCROLL_POSITION = '[ScrollPosition] Set Last';
+  setLastScrollPosition(position: number) : Action {
+    return {
+      type: MovieListActions.SET_LAST_SCROLL_POSITION,
+      payload: position
+    }
+  }
+
 }

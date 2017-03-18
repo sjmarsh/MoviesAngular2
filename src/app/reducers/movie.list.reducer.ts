@@ -98,6 +98,18 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.SET_SELECTED_MOVIE_ID: {
+      let cs = Object.assign({}, state);
+      cs.selectedMovieId = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.SET_LAST_SCROLL_POSITION: {
+      let cs = Object.assign({}, state);
+      cs.lastScrollPosition = action.payload;
+      return cs;
+    }
+
     default:
       return state;
   }

@@ -9,6 +9,8 @@ export class CurrentSearch {
   public lastTakeSize: number;
   public allCategories: Array<string>;
   public selectedCategories: Array<string>;
+  public selectedMovieId: number;
+  public lastScrollPosition: number;
 
   public constructor(
   ){
@@ -19,5 +21,8 @@ export class CurrentSearch {
     this.lastTakeSize = 0;
     this.allCategories = new Array<string>();
     this.selectedCategories = new Array<string>();
+    this.selectedMovieId = -1;
+    this.lastScrollPosition = 0;
+
   }
 }

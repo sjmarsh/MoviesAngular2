@@ -53,11 +53,6 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // initialise the category selector
-    if(this.currentSearch.allCategories && this.currentSearch.allCategories.length === 0){
-      this.store.dispatch(this.movieListActions.getCategories());
-    }
-
     // initialise the search box
     this.term.valueChanges
             .debounceTime(400)
@@ -67,14 +62,51 @@ export class MovieListComponent implements OnInit {
               this.resetPaging();
             });
            
-    // setup search results
+    // restore current search state
     this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentSearch = l);
-  
+    
+    // initialise the category selector
+    if(this.currentSearch.allCategories && this.currentSearch.allCategories.length === 0){
+      this.store.dispatch(this.movieListActions.getCategories());
+    }
+
     // trigger initial search
     let initialSearchTerm = '';
     this.store.select<CurrentSearch>('movieList').subscribe(l => initialSearchTerm = l.searchTerm);
     let shouldSearch = this.currentSearch.movieResponse.movies == null; // only call service on page/app refresh
-    this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });  
+    this.term.setValue(initialSearchTerm, { emitEvent: shouldSearch });      
+
+    // restore the previous scroll position on navigating back
+    this.tryScrollToPreviousPosition();
+  }
+
+  tryScrollToPreviousPosition() : void {
+    console.log('try get element');
+    let selectedMovieId = this.currentSearch.selectedMovieId;
+    let lastScrollPosition = this.currentSearch.lastScrollPosition;
+    if(selectedMovieId !== -1){
+      let start = new Date().getTime();
+      let timeout = 2000; // milliseconds
+      let checkExist = setInterval(function() {
+          var element = document.querySelector(`.movie-id-${selectedMovieId}`);
+          if (element != null) {
+              console.log('lastScrollPosition: ' + lastScrollPosition);
+              window.scrollTo(0, lastScrollPosition);
+              clearInterval(checkExist);
+          }
+          else {
+            console.log('cant find it');
+            let elapsed = new Date().getTime() - start;
+            console.log('elapsed' + elapsed);
+            if(elapsed > timeout){
+              console.log('timeout elapsed');
+              clearInterval(checkExist);
+            }
+          }
+        }, 100); // check every 100ms
+    }
+
+
   }
 
   onScroll(): void {
@@ -101,6 +133,8 @@ export class MovieListComponent implements OnInit {
   }
 
   gotoDetail(movieId: number): void {
+    this.store.dispatch(this.movieListActions.setSelectedMovieId(movieId));
+    this.store.dispatch(this.movieListActions.setLastScrollPosition(window.scrollY));
     let link = ['/detail', movieId];
     this.router.navigate(link);   
   }
