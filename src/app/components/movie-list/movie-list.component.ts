@@ -81,7 +81,6 @@ export class MovieListComponent implements OnInit {
   }
 
   tryScrollToPreviousPosition() : void {
-    console.log('try get element');
     let selectedMovieId = this.currentSearch.selectedMovieId;
     let lastScrollPosition = this.currentSearch.lastScrollPosition;
     if(selectedMovieId !== -1){
@@ -90,8 +89,8 @@ export class MovieListComponent implements OnInit {
       let checkExist = setInterval(function() {
           var element = document.querySelector(`.movie-id-${selectedMovieId}`);
           if (element != null) {
-              console.log('lastScrollPosition: ' + lastScrollPosition);
-              window.scrollTo(0, lastScrollPosition);
+              var container = document.getElementById('search-results');
+              container.scrollTop = lastScrollPosition;
               clearInterval(checkExist);
           }
           else {
@@ -134,7 +133,8 @@ export class MovieListComponent implements OnInit {
 
   gotoDetail(movieId: number): void {
     this.store.dispatch(this.movieListActions.setSelectedMovieId(movieId));
-    this.store.dispatch(this.movieListActions.setLastScrollPosition(window.scrollY));
+    let lastScrollPosition = document.getElementById('search-results').scrollTop;
+    this.store.dispatch(this.movieListActions.setLastScrollPosition(lastScrollPosition));
     let link = ['/detail', movieId];
     this.router.navigate(link);   
   }

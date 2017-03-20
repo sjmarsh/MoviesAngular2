@@ -31,11 +31,12 @@
       </div>
     </div>
 </div>
-<div>
+<div id="search-results"
+         infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" 
+        [scrollWindow]="false" (scrolled)="onScroll()">
   <table class="table table-hover" >
       <tbody>
-          <tr *ngFor="let movie of currentSearch.movieResponse.movies" infinite-scroll infiniteScrollDistance="2"
-            infiniteScrollThrottle="100" (scrolled)="onScroll()">
+          <tr *ngFor="let movie of currentSearch.movieResponse.movies" >
               <td (click)="gotoDetail(movie.id); false">
                   <div class="movie-id-{{movie.id}}">
                      <P class="search-result-title">{{movie.title}}</P>

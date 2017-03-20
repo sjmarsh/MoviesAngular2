@@ -36,16 +36,18 @@ input[type=search]::-webkit-search-cancel-button {
     max-width: 65px;
 }
 
-.search-results {
+#search-results {
+    position: absolute;
     margin-top: 10px;
-    max-height: 500px;
+    max-height: 75vh;
+    width: 100%;
     overflow-y: scroll;
 }
 
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 480px) {
-    .search-result-title {
+    .search-results {
         max-height: 360px;
     }
 }
@@ -96,10 +98,6 @@ and (max-device-width : 1280px) {
 }
 
 /* category selections */
-.category-area {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 
 .tag {
   font-size: 14px;
