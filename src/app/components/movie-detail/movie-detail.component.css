@@ -1,0 +1,42 @@
+.back-button {
+    display:block;
+    background: url('../../../assets/img/left_circle_black.png');
+    background-repeat: no-repeat;
+    background-size:contain;
+    height: 30px;
+    width: 30px;
+    text-indent: -99999px;
+    filter: invert(100%);
+}
+
+.movie-detail-wrapper {
+    /*position: fixed;*/
+}
+
+.movie-detail-nav {
+    float:left;
+    margin: 20px 15px 10px 5px;
+}
+
+.movie-detail-title {
+    float:left;
+}
+
+.movie-detail-detail {
+    margin: 20px 10px 20px 10px;
+    padding: 5px 5px 250px 5px;
+    font-size: large;
+    font-family: 'Segoe UI', Arial;
+}
+
+.bg-img{
+   background: linear-gradient(150deg, #272b30, #272b30 50%, transparent), url('../../../assets/img/film.jpg');
+   background-size: cover;
+   background-position: 50% 50%;
+   background-repeat: no-repeat;
+   left: 0;
+   top: 0;
+   max-width:100%;
+   max-height:100%;
+   opacity: 0.6;
+}

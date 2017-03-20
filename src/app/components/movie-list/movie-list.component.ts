@@ -13,23 +13,23 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchmap';
 
-import { Movie } from './models/movie';
-import { MovieResponse } from './models/movie.response';
-import { MovieService } from './services/movie.service';
-import { ReferenceDataService } from './services/reference-data.service';
-import { CurrentSearch } from './models/current-search';
-import { SearchCriteria } from './models/search-criteria';
+import { Movie }                from '../../models/movie';
+import { MovieResponse }        from '../../models/movie.response';
+import { MovieService }         from '../../services/movie.service';
+import { ReferenceDataService } from '../../services/reference-data.service';
+import { CurrentSearch }        from '../../models/current-search';
+import { SearchCriteria }       from '../../models/search-criteria';
 
-import { AppState } from './reducers';
-import { MovieListActions } from './actions';
-import { slideRightAnimation } from './animations';
+import { AppState }             from '../../reducers';
+import { MovieListActions }     from '../../actions';
+import { slideRightAnimation }  from '../../animations';
 
 @Component({
   selector: 'movie-list',
-  templateUrl: './movie.list.component.html',
+  templateUrl: './movie-list.component.html',
   animations: [ slideRightAnimation ],
   styleUrls: [
-    './app.component.css', '../assets/css/drop-down-styles.css', '../assets/css/arrow-styles.css']
+    './movie-list.component.css', '../../../assets/css/drop-down-styles.css', '../../../assets/css/arrow-styles.css']
 })
 
 export class MovieListComponent implements OnInit {

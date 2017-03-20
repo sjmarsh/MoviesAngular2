@@ -1,16 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { BrowserModule }        from '@angular/platform-browser';
+import { NgModule }             from '@angular/core';
+import { FormsModule }          from '@angular/forms';
+import { HttpModule }           from '@angular/http';
 import { ReactiveFormsModule }  from '@angular/forms';
-import { RouterModule }   from '@angular/router';
-import { Store, StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import { RouterModule }         from '@angular/router';
+import { Store, StoreModule }   from '@ngrx/store';
+import { EffectsModule }        from '@ngrx/effects';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
-import { AppComponent } from './app.component';
-import { MovieListComponent } from './movie.list.component';
-import { MovieDetailComponent } from './movie.detail.component';
+import { AppComponent }         from './app.component';
+import { MovieListComponent }   from './components/movie-list/movie-list.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
 
 import reducer                  from './reducers';
 import { MovieService }         from './services/movie.service';

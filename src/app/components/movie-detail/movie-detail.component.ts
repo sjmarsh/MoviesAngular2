@@ -1,20 +1,19 @@
-import { Component, OnInit, HostBinding  }    from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-import { Router }               from '@angular/router';
-import { Location }                 from '@angular/common';
+import { Component, OnInit, HostBinding  }  from '@angular/core';
+import { ActivatedRoute, Params }           from '@angular/router';
+import { Router }                           from '@angular/router';
+import { Location }                         from '@angular/common';
 
 import 'rxjs/add/operator/switchMap';
 
-import { Movie } from './models/movie';
-import { MovieService } from './services/movie.service';
-import { slideLeftAnimation } from './animations';
+import { Movie }              from '../../models/movie';
+import { MovieService }       from '../../services/movie.service';
+import { slideLeftAnimation } from '../../animations';
 
 
 @Component({
   selector: 'movie-detail',
-  templateUrl: './movie.detail.component.html',
-  styleUrls: [
-    './app.component.css'],
+  templateUrl: './movie-detail.component.html',
+  styleUrls: ['./movie-detail.component.css'],
   animations: [ slideLeftAnimation ]
 })
 
