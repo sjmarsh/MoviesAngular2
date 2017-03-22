@@ -15,8 +15,9 @@ import 'rxjs/add/operator/switchMap';
 
 import { Movie }                from '../../models/movie';
 import { MovieResponse }        from '../../models/movie.response';
-import { MovieService }         from '../../services/movie.service';
-import { ReferenceDataService } from '../../services/reference-data.service';
+import { MovieService }         from '../../services';
+import { ReferenceDataService } from '../../services';
+import { ScrollerService }      from '../../services';
 import { CurrentSearch }        from '../../models/current-search';
 import { SearchCriteria }       from '../../models/search-criteria';
 
@@ -48,6 +49,7 @@ export class MovieListComponent implements OnInit {
       private movieListActions: MovieListActions,
       private movieService: MovieService,
       private referenceDataService: ReferenceDataService,
+      private scrollerService: ScrollerService,
       private router: Router
       ){};
 
@@ -83,29 +85,12 @@ export class MovieListComponent implements OnInit {
   tryScrollToPreviousPosition() : void {
     let selectedMovieId = this.currentSearch.selectedMovieId;
     let lastScrollPosition = this.currentSearch.lastScrollPosition;
+    let classToWaitFor = `.movie-id-${selectedMovieId}`;
+    let containerClassName =  'search-results';
+    let timeout = 2000; 
     if(selectedMovieId !== -1){
-      let start = new Date().getTime();
-      let timeout = 2000; // milliseconds
-      let checkExist = setInterval(function() {
-          var element = document.querySelector(`.movie-id-${selectedMovieId}`);
-          if (element != null) {
-              var container = document.getElementById('search-results');
-              container.scrollTop = lastScrollPosition;
-              clearInterval(checkExist);
-          }
-          else {
-            console.log('cant find it');
-            let elapsed = new Date().getTime() - start;
-            console.log('elapsed' + elapsed);
-            if(elapsed > timeout){
-              console.log('timeout elapsed');
-              clearInterval(checkExist);
-            }
-          }
-        }, 100); // check every 100ms
+      this.scrollerService.tryScrollToPreviousPosition(classToWaitFor, containerClassName, lastScrollPosition, timeout)
     }
-
-
   }
 
   onScroll(): void {

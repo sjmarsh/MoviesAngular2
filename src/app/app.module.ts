@@ -13,8 +13,9 @@ import { MovieListComponent }   from './components/movie-list/movie-list.compone
 import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
 
 import reducer                  from './reducers';
-import { MovieService }         from './services/movie.service';
-import { ReferenceDataService } from './services/reference-data.service';
+import { MovieService }         from './services';
+import { ReferenceDataService } from './services';
+import { ScrollerService }      from './services';
 import { AppRoutingModule }     from './app.routing.module';
 import { MovieListActions }     from './actions';
 import { MovieListEffects }     from './effects';
@@ -35,7 +36,7 @@ import { MovieListEffects }     from './effects';
     StoreModule.provideStore(reducer),
     EffectsModule.run(MovieListEffects)
   ],
-  providers: [MovieService, ReferenceDataService,  MovieListActions],
+  providers: [MovieService, ReferenceDataService, ScrollerService, MovieListActions],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

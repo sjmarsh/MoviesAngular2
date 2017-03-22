@@ -6,7 +6,7 @@ import { Location }                         from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 import { Movie }              from '../../models/movie';
-import { MovieService }       from '../../services/movie.service';
+import { MovieService }       from '../../services';
 import { slideLeftAnimation } from '../../animations';
 
 
