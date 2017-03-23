@@ -1,5 +1,9 @@
 export class ScrollerService{
 
+public scrollToTop() : void {
+  window.scrollTo(0,0);
+};
+
 /**
  * Try and scroll to an element within a containing div once it has loaded using it's last known yPosition
  * @param {string} classNameToWaitFor - the name of the class to wait for before scrolling
@@ -27,5 +31,5 @@ export class ScrollerService{
             }
           }
         }, 100); // check every 100ms
-  }
+  };
 }

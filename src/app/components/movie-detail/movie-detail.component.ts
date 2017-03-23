@@ -7,6 +7,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Movie }              from '../../models/movie';
 import { MovieService }       from '../../services';
+import { ScrollerService }    from '../../services';
 import { slideLeftAnimation } from '../../animations';
 
 
@@ -25,6 +26,7 @@ export class MovieDetailComponent implements OnInit {
 
   constructor(
     private movieService: MovieService,
+    private scrollerService: ScrollerService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router
@@ -37,7 +39,7 @@ export class MovieDetailComponent implements OnInit {
       .switchMap((params: Params) => this.movieService.getMovie(+params['id']))
       .subscribe(movie => this.movieDetail = movie);
     
-    window.scrollTo(0,0);
+    this.scrollerService.scrollToTop();
   }
 
   backToList(){
