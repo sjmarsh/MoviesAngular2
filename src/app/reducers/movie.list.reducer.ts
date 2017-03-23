@@ -24,6 +24,13 @@ export default function (state = initialState, action: Action): MovieListState {
       return cs;
     }
 
+    case MovieListActions.GET_MOVIES_FAILURE: {
+      let cs = Object.assign({}, state);
+      cs.error = action.payload;
+      cs.errorMessage = "An Error occured retrieving movies.";
+      return cs;
+    }
+
     case MovieListActions.GET_MORE_MOVIES: {
       let cs = Object.assign({}, state); 
       cs.searchTerm = action.payload.searchTerm;
@@ -40,6 +47,13 @@ export default function (state = initialState, action: Action): MovieListState {
         cs.movieResponse.movies.push(movie);
       }
       cs.currentPage = cs.currentPage + 1;
+      return cs;
+    }
+
+    case MovieListActions.GET_MORE_MOVIES_FAILURE: {
+      let cs = Object.assign({}, state);
+      cs.error = action.payload;
+      cs.errorMessage = "An Error occured retrieving movies.";
       return cs;
     }
 
@@ -77,6 +91,13 @@ export default function (state = initialState, action: Action): MovieListState {
     case MovieListActions.GET_CATEGORIES_SUCCESS: {
       let cs = Object.assign({}, state);
       cs.allCategories = action.payload;
+      return cs;
+    }
+
+    case MovieListActions.GET_CATEGORIES_FAILURE: {
+      let cs = Object.assign({}, state);
+      cs.error = action.payload;
+      cs.errorMessage = 'An error occured retrieving Category Selections.'
       return cs;
     }
 

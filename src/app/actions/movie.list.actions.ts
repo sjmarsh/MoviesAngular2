@@ -23,6 +23,14 @@ export class MovieListActions {
     };
   }
 
+  static GET_MOVIES_FAILURE = '[GetMovies] Failure';
+  getMoviesFailure(error: any) : Action {
+    return {
+      type: MovieListActions.GET_MOVIES_FAILURE,
+      payload: error
+    }
+  }
+
   static GET_MORE_MOVIES = '[GetMoreMovies] Request';
   getMoreMovies(searchCriteria: SearchCriteria) : Action {
     return {
@@ -36,6 +44,14 @@ export class MovieListActions {
     return {
       type: MovieListActions.GET_MORE_MOVIES_SUCCESS,
       payload: result
+    }
+  }
+
+  static GET_MORE_MOVIES_FAILURE = '[GetMoreMovies] Failure';
+  getMoreMoviesFailure(error: any) : Action {
+    return {
+      type: MovieListActions.GET_MORE_MOVIES_FAILURE,
+      payload: error
     }
   }
 
@@ -82,6 +98,14 @@ export class MovieListActions {
     return{
       type: MovieListActions.GET_CATEGORIES_SUCCESS,
       payload: categories
+    }
+  }
+
+  static GET_CATEGORIES_FAILURE = '[Categories] - Get Failure';
+  getCategoriesFailure(error: any) : Action {
+    return{
+      type: MovieListActions.GET_CATEGORIES_FAILURE,
+      payload: error
     }
   }
 

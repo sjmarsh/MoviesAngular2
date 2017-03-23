@@ -4,6 +4,7 @@ import { Router }                         from '@angular/router';
 import { Observable }                     from 'rxjs/Observable';
 import { Subject }                        from 'rxjs/Subject';
 import { Store }                          from '@ngrx/store';
+import { ToasterService }                 from 'angular2-toaster';
 
 // Observable class extensions
 import 'rxjs/add/observable/of';
@@ -50,11 +51,11 @@ export class MovieListComponent implements OnInit {
       private movieService: MovieService,
       private referenceDataService: ReferenceDataService,
       private scrollerService: ScrollerService,
+      private toaster: ToasterService,
       private router: Router
       ){};
 
   ngOnInit(): void {
-
     // initialise the search box
     this.term.valueChanges
             .debounceTime(400)
@@ -66,7 +67,8 @@ export class MovieListComponent implements OnInit {
            
     // restore current search state
     this.store.select<CurrentSearch>('movieList').subscribe(l => this.currentSearch = l);
-    
+    this.store.subscribe(s => this.reportError(s.movieList.errorMessage));
+
     // initialise the category selector
     if(this.currentSearch.allCategories && this.currentSearch.allCategories.length === 0){
       this.store.dispatch(this.movieListActions.getCategories());
@@ -90,6 +92,12 @@ export class MovieListComponent implements OnInit {
     let timeout = 2000; 
     if(selectedMovieId !== -1){
       this.scrollerService.tryScrollToPreviousPosition(classToWaitFor, containerClassName, lastScrollPosition, timeout)
+    }
+  }
+
+  reportError(errorMessage){
+    if(errorMessage){
+      this.toaster.pop('error', 'Movie Collection Error', errorMessage);
     }
   }
 

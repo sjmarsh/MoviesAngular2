@@ -7,6 +7,9 @@ import { RouterModule }         from '@angular/router';
 import { Store, StoreModule }   from '@ngrx/store';
 import { EffectsModule }        from '@ngrx/effects';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { ToasterModule, 
+         ToasterService,
+         ToasterContainerComponent } from 'angular2-toaster';
 
 import { AppComponent }         from './app.component';
 import { MovieListComponent }   from './components/movie-list/movie-list.component';
@@ -25,6 +28,7 @@ import { MovieListEffects }     from './effects';
     AppComponent,
     MovieListComponent,
     MovieDetailComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -32,6 +36,7 @@ import { MovieListEffects }     from './effects';
     HttpModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
+    ToasterModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
     EffectsModule.run(MovieListEffects)
