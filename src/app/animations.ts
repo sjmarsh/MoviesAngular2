@@ -1,4 +1,5 @@
-import { animate, AnimationEntryMetadata, state, style, transition, trigger } from '@angular/core';
+import { AnimationEntryMetadata } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 // ref: https://angular.io/docs/ts/latest/guide/router.html#!#route-animation
 // Component transition animations
