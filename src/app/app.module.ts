@@ -29,12 +29,12 @@ import { MovieListEffects }     from './effects';
     AppComponent,
     MovieListComponent,
     MovieDetailComponent
-    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    RouterModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
     ToasterModule,
