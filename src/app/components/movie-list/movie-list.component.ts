@@ -14,10 +14,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 
-import { Movie }                from '../../models/movie';
-import { MovieResponse }        from '../../models/movie.response';
-import { MovieService }         from '../../services';
-import { ReferenceDataService } from '../../services';
 import { ScrollerService }      from '../../services';
 import { CurrentSearch }        from '../../models/current-search';
 import { SearchCriteria }       from '../../models/search-criteria';
@@ -47,9 +43,7 @@ export class MovieListComponent implements OnInit {
 
   constructor(
       private store: Store<AppState>,
-      private movieListActions: MovieListActions,
-      private movieService: MovieService,
-      private referenceDataService: ReferenceDataService,
+      private movieListActions: MovieListActions,     
       private scrollerService: ScrollerService,
       private toaster: ToasterService,
       private router: Router
@@ -112,7 +106,6 @@ export class MovieListComponent implements OnInit {
   private getMoreResults(): void {
     let totalPages = Math.ceil(this.currentSearch.movieResponse.count / this.PAGE_SIZE);
     let hasMorePages = this.currentSearch.currentPage < totalPages;
-
     let skip = this.currentSearch.currentPage * this.PAGE_SIZE;
     let take = this.currentSearch.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
     let notAlreadyCalled = (skip !== this.currentSearch.lastSkipSize) && (take !== this.currentSearch.lastTakeSize);
@@ -136,19 +129,13 @@ export class MovieListComponent implements OnInit {
     $event.stopPropagation();
     $event.preventDefault();
     this.store.dispatch(this.movieListActions.addCategoryFilter(category));
-    this.movieService.searchForMovies(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)
-    .subscribe(result => {
-              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
-              this.resetPaging();
-          });
+    this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)))
+    this.resetPaging();
   }
 
   removeCategorySelection(category: string): void {
     this.store.dispatch(this.movieListActions.removeCategoryFilter(category));
-    this.movieService.searchForMovies(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)
-    .subscribe(result => {
-              this.store.dispatch(this.movieListActions.getMoviesSuccess(result));
-              this.resetPaging();
-          });
+    this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)))
+    this.resetPaging();
   }
 }
