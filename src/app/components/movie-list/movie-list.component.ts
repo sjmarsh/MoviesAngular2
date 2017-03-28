@@ -36,6 +36,7 @@ export class MovieListComponent implements OnInit {
   @HostBinding('style.display')   display = 'block';
 
   readonly PAGE_SIZE = 10;
+  readonly SEARCH_RESULTS_CONTAINER_NAME = 'search-results';
   
   term = new FormControl();
   currentSearch = new CurrentSearch();
@@ -82,10 +83,9 @@ export class MovieListComponent implements OnInit {
     let selectedMovieId = this.currentSearch.selectedMovieId;
     let lastScrollPosition = this.currentSearch.lastScrollPosition;
     let classToWaitFor = `.movie-id-${selectedMovieId}`;
-    let containerClassName =  'search-results';
     let timeout = 2000; 
     if(selectedMovieId !== -1){
-      this.scrollerService.tryScrollToPreviousPosition(classToWaitFor, containerClassName, lastScrollPosition, timeout)
+      this.scrollerService.tryScrollToPreviousPosition(classToWaitFor, this.SEARCH_RESULTS_CONTAINER_NAME, lastScrollPosition, timeout)
     }
   }
 
@@ -130,12 +130,14 @@ export class MovieListComponent implements OnInit {
     $event.preventDefault();
     this.store.dispatch(this.movieListActions.addCategoryFilter(category));
     this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)))
+    this.scrollerService.scrollToTopOfContainer(this.SEARCH_RESULTS_CONTAINER_NAME);
     this.resetPaging();
   }
 
   removeCategorySelection(category: string): void {
     this.store.dispatch(this.movieListActions.removeCategoryFilter(category));
     this.store.dispatch(this.movieListActions.getMovies(new SearchCriteria(this.term.value, this.currentSearch.selectedCategories, 0, this.PAGE_SIZE)))
+    this.scrollerService.scrollToTopOfContainer(this.SEARCH_RESULTS_CONTAINER_NAME);
     this.resetPaging();
   }
 }

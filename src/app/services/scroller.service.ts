@@ -32,4 +32,13 @@ public scrollToTop() : void {
           }
         }, 100); // check every 100ms
   };
+
+  /**
+   * Scroll to the top of the container
+   * @param containerElementClassName 
+   */
+  public scrollToTopOfContainer(containerElementClassName: string) : void {
+    var container = document.getElementById(containerElementClassName);
+    container.scrollTop = 0;
+  }
 }
