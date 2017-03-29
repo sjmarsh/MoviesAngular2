@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding  }  from '@angular/core';
 import { ActivatedRoute, Params }           from '@angular/router';
 import { Router }                           from '@angular/router';
-import { Location }                         from '@angular/common';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -28,7 +27,6 @@ export class MovieDetailComponent implements OnInit {
     private movieService: MovieService,
     private scrollerService: ScrollerService,
     private route: ActivatedRoute,
-    private location: Location,
     private router: Router
   ){}
 
@@ -36,7 +34,7 @@ export class MovieDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => this.movieService.getMovie(+params['id']))
+      .switchMap((params: Params) => this.movieService.getMovie(+params['id']) )
       .subscribe(movie => this.movieDetail = movie);
     
     this.scrollerService.scrollToTop();

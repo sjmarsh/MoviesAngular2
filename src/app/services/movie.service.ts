@@ -19,16 +19,6 @@ export class MovieService {
 
   constructor(private http: Http){}
 
-/*
- // not used
-  getMovies(): Promise<MovieResponse> {
-    return this.http.get(this.baseUrl)
-               .toPromise()
-               .then(response => response.json() as MovieResponse)
-               .catch(this.handleError);
-  };
-*/
-
   searchForMovies(term: string, categories: Array<string>, skip: number, take: number) : Observable<MovieResponse>{    
     var categoryList = '';
     if(categories && categories.length > 0)
