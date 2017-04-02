@@ -67,8 +67,7 @@ describe('MovieDetailComponent', () => {
       comp = fixture.componentInstance; // MovieDetailComponent test instance
       movieService = TestBed.get(MovieService);
       scrollerService = TestBed.get(ScrollerService);
-    })
-    ;
+    });
   }));
 
   describe('ngOnInit', () => {
@@ -98,6 +97,3 @@ describe('MovieDetailComponent', () => {
   });
 
 });
-
-
-
