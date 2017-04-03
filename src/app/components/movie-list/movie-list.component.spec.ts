@@ -222,6 +222,44 @@ describe('MovieListComponent', ()=>{
       });
 
     });
+
+    describe('goToDetail', ()=> {
+
+      it('should store selected movie Id', () =>{
+        const movieId = 10;
+        let store = TestBed.get(Store);
+        spyOn(store, "dispatch");
+
+        comp.gotoDetail(movieId);
+
+        expect(store.dispatch.calls.all()[0].args[0]).toEqual(movieListActions.setSelectedMovieId(movieId));
+      });
+
+      it('should store last scroll position', () =>{
+        const movieId = 10;
+        const lastScrollPos = 300;
+        let store = TestBed.get(Store);
+        spyOn(store, "dispatch");
+        spyOn(scrollerService, "getScrollPositionInContainer").and.returnValue(lastScrollPos);
+
+        comp.gotoDetail(movieId);
+
+        expect(store.dispatch.calls.all()[1].args[0]).toEqual(movieListActions.setLastScrollPosition(lastScrollPos));
+      });
+
+      it('should navigate to movie detail for movie id', () => {
+        const movieId = 10;
+        const lastScrollPos = 300;
+        let store = TestBed.get(Store);
+        
+        comp.gotoDetail(movieId);
+
+        expect(routerStub.navigate).toHaveBeenCalledWith(['/detail', movieId]);
+      });
+
+    });
+
+
 });
 
 class MockStore {
