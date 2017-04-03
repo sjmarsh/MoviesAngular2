@@ -259,6 +259,77 @@ describe('MovieListComponent', ()=>{
 
     });
 
+    describe('selectCategory', () => {
+      let fakeEvent;
+      beforeEach(() =>{
+        fakeEvent = {
+          stopPropagation() : void {
+          },
+          preventDefault() : void {
+          }
+        }
+      });
+      
+
+      it('should stop event propagation', () =>{
+        spyOn(fakeEvent, "stopPropagation");
+
+        comp.selectCategory(fakeEvent, '');
+
+        expect(fakeEvent.stopPropagation).toHaveBeenCalled();
+      });
+
+      it('should preventDefault event behaviour', () =>{
+        spyOn(fakeEvent, "preventDefault");
+
+        comp.selectCategory(fakeEvent, '');
+
+        expect(fakeEvent.preventDefault).toHaveBeenCalled();
+      });
+
+      it('should store category selection', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.selectCategory(fakeEvent, category);
+
+        expect(store.dispatch.calls.all()[0].args[0]).toEqual(movieListActions.addCategoryFilter(category));
+      });
+
+      it('should get movies for selected category', () =>{
+        const category = 'action';
+        comp.currentSearch.selectedCategories = [category];
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.selectCategory(fakeEvent, category);
+
+        expect(store.dispatch.calls.all()[1].args[0]).toEqual(movieListActions.getMovies(new SearchCriteria(null, [category], 0, 10)));
+      });
+
+      it('should scroll to top of container', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+        spyOn(scrollerService, 'scrollToTopOfContainer');
+
+        comp.selectCategory(fakeEvent, category);
+
+        expect(scrollerService.scrollToTopOfContainer).toHaveBeenCalledWith(comp.SEARCH_RESULTS_CONTAINER_NAME);
+      });
+
+      it('should reset paging', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.selectCategory(fakeEvent, category);
+
+        expect(store.dispatch.calls.all()[2].args[0]).toEqual(movieListActions.resetPaging());
+      })
+
+    });
 
 });
 
