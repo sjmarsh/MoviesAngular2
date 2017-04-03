@@ -119,7 +119,7 @@ export class MovieListComponent implements OnInit {
 
   gotoDetail(movieId: number): void {
     this.store.dispatch(this.movieListActions.setSelectedMovieId(movieId));
-    let lastScrollPosition = document.getElementById('search-results').scrollTop;
+    let lastScrollPosition = this.scrollerService.getScrollPositionInContainer('search-results');;
     this.store.dispatch(this.movieListActions.setLastScrollPosition(lastScrollPosition));
     let link = ['/detail', movieId];
     this.router.navigate(link);   

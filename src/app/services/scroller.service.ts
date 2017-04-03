@@ -41,4 +41,12 @@ public scrollToTop() : void {
     var container = document.getElementById(containerElementClassName);
     container.scrollTop = 0;
   }
+
+  /**
+   * Get the current Y axis scroll position for a given container
+   * @param containerElementClassName - the class name for the container
+   */
+  public getScrollPositionInContainer(containerElementClassName: string) : number {
+    return document.getElementById(containerElementClassName).scrollTop;
+  }
 }
