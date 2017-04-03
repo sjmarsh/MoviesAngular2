@@ -331,6 +331,52 @@ describe('MovieListComponent', ()=>{
 
     });
 
+    describe('removeCategorySelection', () => {
+
+      it('should remove category selection from store', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.removeCategorySelection(category);
+
+        expect(store.dispatch.calls.all()[0].args[0]).toEqual(movieListActions.removeCategoryFilter(category));
+      });
+
+      it('should get movies for remaining categories', () =>{
+        const category = 'action';
+        comp.currentSearch.selectedCategories = [];
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.removeCategorySelection(category);
+
+        expect(store.dispatch.calls.all()[1].args[0]).toEqual(movieListActions.getMovies(new SearchCriteria(null, [], 0, 10)));
+      });
+
+      it('should scroll to top of container', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+        spyOn(scrollerService, 'scrollToTopOfContainer');
+
+        comp.removeCategorySelection(category);
+
+        expect(scrollerService.scrollToTopOfContainer).toHaveBeenCalledWith(comp.SEARCH_RESULTS_CONTAINER_NAME);
+      });
+
+      it('should reset paging', () => {
+        const category = 'action';
+        let store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
+
+        comp.removeCategorySelection(category);
+
+        expect(store.dispatch.calls.all()[2].args[0]).toEqual(movieListActions.resetPaging());
+      })
+      
+    });
+
 });
 
 class MockStore {
