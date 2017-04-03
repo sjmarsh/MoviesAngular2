@@ -79,7 +79,7 @@ export class MovieListComponent implements OnInit {
     this.tryScrollToPreviousPosition();
   }
 
-  tryScrollToPreviousPosition() : void {
+  private tryScrollToPreviousPosition() : void {
     let selectedMovieId = this.currentSearch.selectedMovieId;
     let lastScrollPosition = this.currentSearch.lastScrollPosition;
     let classToWaitFor = `.movie-id-${selectedMovieId}`;
@@ -109,7 +109,7 @@ export class MovieListComponent implements OnInit {
     let skip = this.currentSearch.currentPage * this.PAGE_SIZE;
     let take = this.currentSearch.currentPage * this.PAGE_SIZE + this.PAGE_SIZE;
     let notAlreadyCalled = (skip !== this.currentSearch.lastSkipSize) && (take !== this.currentSearch.lastTakeSize);
-
+    
     if(hasMorePages && notAlreadyCalled){      
       this.store.dispatch(this.movieListActions.setLastSkipSize(skip));
       this.store.dispatch(this.movieListActions.setLastTakeSize(take));

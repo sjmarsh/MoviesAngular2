@@ -24,6 +24,7 @@ import { MovieListComponent }         from './movie-list.component';
 import { ScrollerService }            from '../../services';
 import { CurrentSearch }              from '../../models/current-search';
 import { SearchCriteria }             from '../../models/search-criteria';
+import { MovieResponse }              from '../../models/movie.response';
 import { AppState }                   from '../../reducers';
 import reducer                        from '../../reducers';
 import { MovieListActions }           from '../../actions';
@@ -160,6 +161,67 @@ describe('MovieListComponent', ()=>{
       
     });
 
+    describe('reportError', () => {
+
+      it('should pop toaster with supplied message', () =>{
+        const message = 'oh no!';
+
+        comp.reportError(message);
+
+        expect(toasterStub.pop).toHaveBeenCalledWith('error', 'Movie Collection Error', message);
+      });
+
+    });
+
+    describe('onScroll', () => {
+      let fakeMovieResponse =  new MovieResponse();
+      fakeMovieResponse.count = 25;
+      let fakeCurrentSearch = new CurrentSearch();
+      fakeCurrentSearch.movieResponse = fakeMovieResponse; 
+      fakeCurrentSearch.currentPage = 1;
+      fakeCurrentSearch.lastSkipSize = 0;
+      fakeCurrentSearch.lastTakeSize = 0;
+      
+      beforeEach(() =>{
+        comp.currentSearch = fakeCurrentSearch;
+      });
+
+      it('should get more movies when has more pages and not already called', ()=>{
+        let store = TestBed.get(Store);
+        spyOn(store, "dispatch");
+
+        comp.onScroll();
+
+        expect(store.dispatch.calls.all()[0].args[0]).toEqual(movieListActions.setLastSkipSize(10));
+        expect(store.dispatch.calls.all()[1].args[0]).toEqual(movieListActions.setLastTakeSize(20));
+        expect(store.dispatch.calls.all()[2].args[0]).toEqual(movieListActions.getMoreMovies(new SearchCriteria(null, [], 10, 20)));
+      });
+
+      it('should not get more movies when has more pages and already called', ()=>{
+        comp.currentSearch.lastSkipSize = 10;
+        comp.currentSearch.lastTakeSize = 20;
+
+        let store = TestBed.get(Store);
+        spyOn(store, "dispatch");
+
+        comp.onScroll();
+
+        expect(store.dispatch).not.toHaveBeenCalled();
+      });
+
+      it('should not get more movies when does not have more pages', ()=>{
+        comp.currentSearch.movieResponse.count = 30;
+        comp.currentSearch.currentPage = 3;
+
+        let store = TestBed.get(Store);
+        spyOn(store, "dispatch");
+
+        comp.onScroll();
+
+        expect(store.dispatch).not.toHaveBeenCalled();
+      });
+
+    });
 });
 
 class MockStore {
