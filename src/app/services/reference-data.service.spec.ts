@@ -7,7 +7,12 @@ import { Observable }                               from 'rxjs/Observable';
 import { ReferenceDataService }   from './';
 import { environment }            from '../../environments/environment';
 
-fdescribe('ReferenceDataService', ()=>{
+/**
+ * Useful reference for http testing: 
+ * http://www.zackarychapple.guru/angular2/2016/11/25/angular2-testing-services.html
+ */
+
+describe('ReferenceDataService', ()=>{
   let mockBackend: MockBackend;
   let referenceDataService: ReferenceDataService;
 
