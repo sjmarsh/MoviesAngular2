@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { ToasterService } from 'angular2-toaster';
 
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +16,6 @@ export class MovieListEffects{
     private movieService: MovieService,
     private referenceDataService: ReferenceDataService,
     private movieListActions: MovieListActions,
-    private toaster: ToasterService,
     private actions$: Actions
   ){}
 
@@ -38,5 +36,6 @@ export class MovieListEffects{
   @Effect() getCategories$ = this.actions$
     .ofType(MovieListActions.GET_CATEGORIES)
     .switchMap(() => this.referenceDataService.getCategories())
-    .map(result => this.movieListActions.getCategoriesSuccess(result));
+    .map(result => this.movieListActions.getCategoriesSuccess(result))
+    .catch(err => Observable.of({ type: MovieListActions.GET_CATEGORIES_FAILURE, payload: err }));
 }
