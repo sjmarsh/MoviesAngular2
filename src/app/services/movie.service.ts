@@ -5,9 +5,10 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-import { Movie } from '../models/movie';
-import { MovieResponse } from '../models/movie.response';
-import { CurrentSearch } from '../models/current-search';
+import { Movie }            from '../models';
+import { SearchCriteria }   from '../models';
+import { MovieResponse }    from '../models';
+import { CurrentSearch }    from '../models';
 
 import { environment } from '../../environments/environment';
 
@@ -19,6 +20,10 @@ export class MovieService {
 
   constructor(private http: Http){}
 
+  searchForMoviesWithCriteria(criteria: SearchCriteria) : Observable<MovieResponse>{
+    return this.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize);
+  }
+  
   searchForMovies(term: string, categories: Array<string>, skip: number, take: number) : Observable<MovieResponse>{    
     var categoryList = '';
     if(categories && categories.length > 0)
