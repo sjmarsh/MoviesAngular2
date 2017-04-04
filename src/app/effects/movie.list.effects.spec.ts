@@ -16,7 +16,7 @@ import { Movie,
          SearchCriteria }           from '../models';
 
 
-fdescribe('Movie List Effects', () => {
+describe('Movie List Effects', () => {
     let runner: EffectsRunner;
     let effects: MovieListEffects;
     let movieListActions = new MovieListActions();
