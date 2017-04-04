@@ -8,7 +8,7 @@ import { MovieService }   from './';
 import { environment }    from '../../environments/environment';
 import { SearchCriteria } from '../models';
 
-fdescribe('MovieService', ()=>{
+describe('MovieService', ()=>{
   let mockBackend: MockBackend;
   let movieService: MovieService;
 
