@@ -24,14 +24,14 @@ export class MovieListEffects{
   @Effect() getMovies$ = this.actions$
     .ofType(MovieListActions.GET_MOVIES)
     .select<SearchCriteria>(action => action.payload)
-    .switchMap(criteria => this.movieService.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize))
+    .switchMap(criteria => this.movieService.searchForMoviesWithCriteria(criteria))
     .map(result => this.movieListActions.getMoviesSuccess(result))
     .catch(err => Observable.of({ type: MovieListActions.GET_MOVIES_FAILURE, payload: err })); 
 
   @Effect() getMoreMovies$ = this.actions$
     .ofType(MovieListActions.GET_MORE_MOVIES)
     .select<SearchCriteria>(action =>  action.payload)
-    .switchMap(criteria => this.movieService.searchForMovies(criteria.searchTerm, criteria.selectedCategories, criteria.currentSkipSize, criteria.currentTakeSize))
+    .switchMap(criteria => this.movieService.searchForMoviesWithCriteria(criteria))
     .map(result => this.movieListActions.getMoreMoviesSuccess(result))
     .catch(err => Observable.of({ type: MovieListActions.GET_MORE_MOVIES_FAILURE, payload: err })); 
 
