@@ -127,3 +127,32 @@ and (max-device-width : 1280px) {
   color: #fff;
   margin-bottom: 2px;
 }
+
+.loading-indicator {
+    padding: 1px;
+    margin: 1px;
+}
+
+.loading {
+	-webkit-animation:spin 2s linear infinite;
+	-moz-animation:spin 2s linear infinite;
+	animation:spin 2s linear infinite;
+    filter: invert(1);
+    height: 30px;
+    widows: 30px;
+    background-size: contain;
+}
+@-moz-keyframes spin { 100% { 
+	-moz-transform:rotate(360deg); 
+	}
+}
+@-webkit-keyframes spin { 100% { 
+	-webkit-transform:rotate(360deg); 
+	}
+}
+@keyframes spin { 100% {
+	-webkit-transform:rotate(360deg);
+	transform:rotate(360deg);
+	}
+}
+

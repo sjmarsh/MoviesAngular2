@@ -37,11 +37,10 @@ export class MovieListComponent implements OnInit {
 
   readonly PAGE_SIZE = 10;
   readonly SEARCH_RESULTS_CONTAINER_NAME = 'search-results';
-  
+
   term = new FormControl();
   currentSearch = new CurrentSearch();
-  hasResults: boolean;
-
+  
   constructor(
       private store: Store<AppState>,
       private movieListActions: MovieListActions,     

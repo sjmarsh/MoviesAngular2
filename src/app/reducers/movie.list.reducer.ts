@@ -15,12 +15,14 @@ export default function (state = initialState, action: Action): MovieListState {
       cs.selectedCategories = action.payload.selectedCategories;
       cs.lastTakeSize = action.payload.currentTakeSize;
       cs.lastSkipSize = action.payload.currentSkipSize;
+      cs.isLoading = true;
       return cs;
     }
 
     case MovieListActions.GET_MOVIES_SUCCESS: {
       let cs = Object.assign({}, state);
       cs.movieResponse = action.payload;
+      cs.isLoading = false;
       return cs;
     }
 
@@ -28,6 +30,7 @@ export default function (state = initialState, action: Action): MovieListState {
       let cs = Object.assign({}, state);
       cs.error = action.payload;
       cs.errorMessage = "An Error occured retrieving movies.";
+      cs.isLoading = false;
       return cs;
     }
 
@@ -37,6 +40,7 @@ export default function (state = initialState, action: Action): MovieListState {
       cs.selectedCategories = action.payload.selectedCategories;
       cs.lastTakeSize = action.payload.currentTakeSize;
       cs.lastSkipSize = action.payload.currentSkipSize;
+      cs.isLoading = true;
       return cs;
     }
 
@@ -47,6 +51,7 @@ export default function (state = initialState, action: Action): MovieListState {
         cs.movieResponse.movies.push(movie);
       }
       cs.currentPage = cs.currentPage + 1;
+      cs.isLoading = false;
       return cs;
     }
 
@@ -54,6 +59,7 @@ export default function (state = initialState, action: Action): MovieListState {
       let cs = Object.assign({}, state);
       cs.error = action.payload;
       cs.errorMessage = "An Error occured retrieving movies.";
+      cs.isLoading = false;
       return cs;
     }
 

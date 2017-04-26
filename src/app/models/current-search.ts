@@ -13,6 +13,7 @@ export class CurrentSearch {
   public lastScrollPosition: number;
   public error: any;
   public errorMessage: string;
+  public isLoading: boolean;
 
   public constructor(
   ){
@@ -25,5 +26,6 @@ export class CurrentSearch {
     this.selectedCategories = new Array<string>();
     this.selectedMovieId = -1;
     this.lastScrollPosition = 0;
+    this.isLoading = false;
   }
 }

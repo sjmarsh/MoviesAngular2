@@ -4,8 +4,9 @@
   </h1>
 </div>
 <div class="search-area row">
-  <div class="col-lg-3" >
-    <input name="search" type="search" [formControl]="term" placeholder="Search.." class="search-box" autofocus="true" />
+  <div class="col-lg-3">
+     <input name="search" type="search" [formControl]="term" placeholder="Search.." class="search-box " autofocus="true" />
+     <span *ngIf="currentSearch.isLoading" class="loading-indicator pull-right"><img src="/assets/img/loading.png" class="loading no-style"></span>
   </div>
   <div class="category-selection-area col-lg-2">
     <div class="drop-down">
@@ -33,7 +34,8 @@
 </div>
 <div id="search-results"
          infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" 
-        [scrollWindow]="false" (scrolled)="onScroll()">
+        [scrollWindow]="false" (scrolled)="onScroll()"
+        *ngIf="currentSearch.movieResponse.count > 0">
   <table class="table table-hover" >
       <tbody>
           <tr *ngFor="let movie of currentSearch.movieResponse.movies" >
@@ -50,5 +52,5 @@
           </tr>
       </tbody>
   </table>
-  <p *ngIf="hasResults == false">No Results</p>
 </div>
+<p style="color:white" id="no-results" *ngIf="currentSearch.movieResponse.count == 0">No Results</p>

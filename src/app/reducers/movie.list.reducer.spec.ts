@@ -27,6 +27,7 @@ describe('Movie List Reducer', () => {
     expect(result.selectedCategories).toEqual(searchCriteria.selectedCategories);
     expect(result.lastTakeSize).toEqual(searchCriteria.currentTakeSize);
     expect(result.lastSkipSize).toEqual(searchCriteria.currentSkipSize);
+    expect(result.isLoading).toBeTruthy();
   });
 
   it('GET_MOVIES_SUCCESS - Should update state with get movie response', () => {
@@ -55,6 +56,7 @@ describe('Movie List Reducer', () => {
     expect(result.selectedCategories).toEqual(searchCriteria.selectedCategories);
     expect(result.lastTakeSize).toEqual(searchCriteria.currentTakeSize);
     expect(result.lastSkipSize).toEqual(searchCriteria.currentSkipSize);
+    expect(result.isLoading).toBeTruthy();
   });
 
   it('GET_MORE_MOVIES_SUCCESS - Should update state with get more movies response', () => {
@@ -65,11 +67,12 @@ describe('Movie List Reducer', () => {
     let movieResponse = new MovieResponse();
     movieResponse.movies = [new Movie()];
     movieResponse.count = movieCount;
-
+    
     let result = movieListReducer(initialState, actions.getMoreMoviesSuccess(movieResponse))
 
     expect(result.movieResponse.movies).toEqual([new Movie(), new Movie()]);
     expect(result.movieResponse.count).toEqual(movieCount);
+    expect(result.isLoading).toBeFalsy();
   });
 
   it('GET_MORE_MOVIES_FAILURE - Should update state with get movie error response', () => {
@@ -79,6 +82,7 @@ describe('Movie List Reducer', () => {
 
     expect(result.error).toEqual(error);
     expect(result.errorMessage).toEqual("An Error occured retrieving movies.");
+    expect(result.isLoading).toBeFalsy();
   });
 
   it('SET_CURRENT_PAGE - Should update state with current page', () => {
