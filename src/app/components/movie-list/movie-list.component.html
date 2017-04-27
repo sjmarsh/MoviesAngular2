@@ -2,11 +2,14 @@
   <h1>
     {{title}}
   </h1>
+  <div *ngIf="currentSearch.isLoading" class="loading-indicator pull-right">
+      <img src="/assets/img/loading.png" class="loading no-style">
+      <p class="loading-indicator-text">Loading...</p>
+  </div>
 </div>
 <div class="search-area row">
   <div class="col-lg-3">
      <input name="search" type="search" [formControl]="term" placeholder="Search.." class="search-box " autofocus="true" />
-     <span *ngIf="currentSearch.isLoading" class="loading-indicator pull-right"><img src="/assets/img/loading.png" class="loading no-style"></span>
   </div>
   <div class="category-selection-area col-lg-2">
     <div class="drop-down">
@@ -21,16 +24,16 @@
                 <a href="#" (click)="selectCategory($event, category)">{{category}}</a>
             </div>
         </div>
+      </div>
     </div>
-  </div>
-  <div class="category-selections col-lg-7">
+    <div class="category-selections col-lg-7">
       <div *ngFor="let selection of currentSearch.selectedCategories">
           <span class="tag label label-info">
               <span>{{selection}}</span>
               <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white" (click)="removeCategorySelection(selection)"></i></a> 
           </span>
       </div>
-    </div>
+    </div>  
 </div>
 <div id="search-results"
          infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" 
@@ -48,9 +51,8 @@
               <td>
                   <a href="#/{{movie.id}}" class="detail-button" >Detail</a>
               </td>
-
           </tr>
       </tbody>
   </table>
 </div>
-<p style="color:white" id="no-results" *ngIf="currentSearch.movieResponse.count == 0">No Results</p>
+<p id="no-results" *ngIf="currentSearch.movieResponse.count == 0">No Results</p>

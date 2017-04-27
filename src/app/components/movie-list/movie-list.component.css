@@ -44,6 +44,11 @@ input[type=search]::-webkit-search-cancel-button {
     overflow-y: scroll;
 }
 
+#no-results {
+    text-align: center;
+    margin: 20vh;
+}
+
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 480px) {
@@ -128,9 +133,15 @@ and (max-device-width : 1280px) {
   margin-bottom: 2px;
 }
 
+/*loading*/
+
 .loading-indicator {
     padding: 1px;
     margin: 1px;
+}
+
+.loading-indicator-text {
+    margin: 5px 0px 0px -10px;
 }
 
 .loading {
