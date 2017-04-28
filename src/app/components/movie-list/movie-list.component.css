@@ -137,7 +137,7 @@ and (max-device-width : 1280px) {
 
 .loading-indicator {
     padding: 1px;
-    margin: 1px;
+    margin-top: -30px;
 }
 
 .loading-indicator-text {
